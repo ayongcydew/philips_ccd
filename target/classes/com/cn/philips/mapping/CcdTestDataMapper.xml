@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.philips.dao.CcdTestDataMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.philips.pojo.CcdTestData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="locx" property="locx" jdbcType="INTEGER" />
+    <result column="locy" property="locy" jdbcType="INTEGER" />
+    <result column="bri" property="bri" jdbcType="DOUBLE" />
+    <result column="x" property="x" jdbcType="DOUBLE" />
+    <result column="y" property="y" jdbcType="DOUBLE" />
+    <result column="u" property="u" jdbcType="DOUBLE" />
+    <result column="v" property="v" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, plan_name, locx, locy, bri, x, y, u, v
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.CcdTestDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ccd_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ccd_test_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ccd_test_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.philips.pojo.CcdTestDataExample" >
+    delete from ccd_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.philips.pojo.CcdTestData" >
+    insert into ccd_test_data (id, plan_name, locx, 
+      locy, bri, x, y, 
+      u, v)
+    values (#{id,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, #{locx,jdbcType=INTEGER}, 
+      #{locy,jdbcType=INTEGER}, #{bri,jdbcType=DOUBLE}, #{x,jdbcType=DOUBLE}, #{y,jdbcType=DOUBLE}, 
+      #{u,jdbcType=DOUBLE}, #{v,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.philips.pojo.CcdTestData" >
+    insert into ccd_test_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="locx != null" >
+        locx,
+      </if>
+      <if test="locy != null" >
+        locy,
+      </if>
+      <if test="bri != null" >
+        bri,
+      </if>
+      <if test="x != null" >
+        x,
+      </if>
+      <if test="y != null" >
+        y,
+      </if>
+      <if test="u != null" >
+        u,
+      </if>
+      <if test="v != null" >
+        v,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="locx != null" >
+        #{locx,jdbcType=INTEGER},
+      </if>
+      <if test="locy != null" >
+        #{locy,jdbcType=INTEGER},
+      </if>
+      <if test="bri != null" >
+        #{bri,jdbcType=DOUBLE},
+      </if>
+      <if test="x != null" >
+        #{x,jdbcType=DOUBLE},
+      </if>
+      <if test="y != null" >
+        #{y,jdbcType=DOUBLE},
+      </if>
+      <if test="u != null" >
+        #{u,jdbcType=DOUBLE},
+      </if>
+      <if test="v != null" >
+        #{v,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.philips.pojo.CcdTestDataExample" resultType="java.lang.Integer" >
+    select count(*) from ccd_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ccd_test_data
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locx != null" >
+        locx = #{record.locx,jdbcType=INTEGER},
+      </if>
+      <if test="record.locy != null" >
+        locy = #{record.locy,jdbcType=INTEGER},
+      </if>
+      <if test="record.bri != null" >
+        bri = #{record.bri,jdbcType=DOUBLE},
+      </if>
+      <if test="record.x != null" >
+        x = #{record.x,jdbcType=DOUBLE},
+      </if>
+      <if test="record.y != null" >
+        y = #{record.y,jdbcType=DOUBLE},
+      </if>
+      <if test="record.u != null" >
+        u = #{record.u,jdbcType=DOUBLE},
+      </if>
+      <if test="record.v != null" >
+        v = #{record.v,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ccd_test_data
+    set id = #{record.id,jdbcType=INTEGER},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      locx = #{record.locx,jdbcType=INTEGER},
+      locy = #{record.locy,jdbcType=INTEGER},
+      bri = #{record.bri,jdbcType=DOUBLE},
+      x = #{record.x,jdbcType=DOUBLE},
+      y = #{record.y,jdbcType=DOUBLE},
+      u = #{record.u,jdbcType=DOUBLE},
+      v = #{record.v,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.philips.pojo.CcdTestData" >
+    update ccd_test_data
+    <set >
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="locx != null" >
+        locx = #{locx,jdbcType=INTEGER},
+      </if>
+      <if test="locy != null" >
+        locy = #{locy,jdbcType=INTEGER},
+      </if>
+      <if test="bri != null" >
+        bri = #{bri,jdbcType=DOUBLE},
+      </if>
+      <if test="x != null" >
+        x = #{x,jdbcType=DOUBLE},
+      </if>
+      <if test="y != null" >
+        y = #{y,jdbcType=DOUBLE},
+      </if>
+      <if test="u != null" >
+        u = #{u,jdbcType=DOUBLE},
+      </if>
+      <if test="v != null" >
+        v = #{v,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.philips.pojo.CcdTestData" >
+    update ccd_test_data
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      locx = #{locx,jdbcType=INTEGER},
+      locy = #{locy,jdbcType=INTEGER},
+      bri = #{bri,jdbcType=DOUBLE},
+      x = #{x,jdbcType=DOUBLE},
+      y = #{y,jdbcType=DOUBLE},
+      u = #{u,jdbcType=DOUBLE},
+      v = #{v,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

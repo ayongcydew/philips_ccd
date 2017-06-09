@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+	<!--这是我们的View-->
+	<div id="app">{{ message }}</div>
+	<form action="/user/showUser" method="post" name="getTestPlan">
+		<table>
+			<tr>
+				<td><label for="txtname">账号：</label></td>
+				<td><input type="text" id="txtname" name="login_username" /></td>
+			</tr>
+			<tr>
+				<td><label for="txtpswd">密码：</label></td>
+				<td><input type="password" id="txtpswd" name="login_pswd" /></td>
+			</tr>
+			<tr>
+				<td colspan=2><input type="reset" /> <input type="submit" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+					// 这是我们的Model
+					var exampleData = {
+
+						message : 'Hello Wrold'
+					}
+
+					// 创建一个 Vue 实例或 "ViewModel"
+					// 它连接 View 与 Model
+					new Vue({
+						el : '#app',
+						data : exampleData
+					})
+</script>
+</html>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.philips.dao.AvgTestDataMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.philips.pojo.AvgTestData" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="avg_bri" property="avgBri" jdbcType="DOUBLE" />
+    <result column="avg_x" property="avgX" jdbcType="DOUBLE" />
+    <result column="avg_y" property="avgY" jdbcType="DOUBLE" />
+    <result column="avg_u" property="avgU" jdbcType="DOUBLE" />
+    <result column="avg_v" property="avgV" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, plan_name, avg_bri, avg_x, avg_y, avg_u, avg_v
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.AvgTestDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from avg_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from avg_test_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from avg_test_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.philips.pojo.AvgTestDataExample" >
+    delete from avg_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.philips.pojo.AvgTestData" >
+    insert into avg_test_data (id, plan_name, avg_bri, 
+      avg_x, avg_y, avg_u, avg_v
+      )
+    values (#{id,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, #{avgBri,jdbcType=DOUBLE}, 
+      #{avgX,jdbcType=DOUBLE}, #{avgY,jdbcType=DOUBLE}, #{avgU,jdbcType=DOUBLE}, #{avgV,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.philips.pojo.AvgTestData" >
+    insert into avg_test_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="avgBri != null" >
+        avg_bri,
+      </if>
+      <if test="avgX != null" >
+        avg_x,
+      </if>
+      <if test="avgY != null" >
+        avg_y,
+      </if>
+      <if test="avgU != null" >
+        avg_u,
+      </if>
+      <if test="avgV != null" >
+        avg_v,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="avgBri != null" >
+        #{avgBri,jdbcType=DOUBLE},
+      </if>
+      <if test="avgX != null" >
+        #{avgX,jdbcType=DOUBLE},
+      </if>
+      <if test="avgY != null" >
+        #{avgY,jdbcType=DOUBLE},
+      </if>
+      <if test="avgU != null" >
+        #{avgU,jdbcType=DOUBLE},
+      </if>
+      <if test="avgV != null" >
+        #{avgV,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.philips.pojo.AvgTestDataExample" resultType="java.lang.Integer" >
+    select count(*) from avg_test_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update avg_test_data
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgBri != null" >
+        avg_bri = #{record.avgBri,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgX != null" >
+        avg_x = #{record.avgX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgY != null" >
+        avg_y = #{record.avgY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgU != null" >
+        avg_u = #{record.avgU,jdbcType=DOUBLE},
+      </if>
+      <if test="record.avgV != null" >
+        avg_v = #{record.avgV,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update avg_test_data
+    set id = #{record.id,jdbcType=INTEGER},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      avg_bri = #{record.avgBri,jdbcType=DOUBLE},
+      avg_x = #{record.avgX,jdbcType=DOUBLE},
+      avg_y = #{record.avgY,jdbcType=DOUBLE},
+      avg_u = #{record.avgU,jdbcType=DOUBLE},
+      avg_v = #{record.avgV,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.philips.pojo.AvgTestData" >
+    update avg_test_data
+    <set >
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="avgBri != null" >
+        avg_bri = #{avgBri,jdbcType=DOUBLE},
+      </if>
+      <if test="avgX != null" >
+        avg_x = #{avgX,jdbcType=DOUBLE},
+      </if>
+      <if test="avgY != null" >
+        avg_y = #{avgY,jdbcType=DOUBLE},
+      </if>
+      <if test="avgU != null" >
+        avg_u = #{avgU,jdbcType=DOUBLE},
+      </if>
+      <if test="avgV != null" >
+        avg_v = #{avgV,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.philips.pojo.AvgTestData" >
+    update avg_test_data
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      avg_bri = #{avgBri,jdbcType=DOUBLE},
+      avg_x = #{avgX,jdbcType=DOUBLE},
+      avg_y = #{avgY,jdbcType=DOUBLE},
+      avg_u = #{avgU,jdbcType=DOUBLE},
+      avg_v = #{avgV,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

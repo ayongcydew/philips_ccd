@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.philips.dao.G22MatrixMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.philips.pojo.G22Matrix" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="xG22" property="xg22" jdbcType="DOUBLE" />
+    <result column="yG22" property="yg22" jdbcType="DOUBLE" />
+    <result column="wG22" property="wg22" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, xG22, yG22, wG22
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.G22MatrixExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from g22matrix
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from g22matrix
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from g22matrix
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cn.philips.pojo.G22MatrixExample" >
+    delete from g22matrix
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.philips.pojo.G22Matrix" >
+    insert into g22matrix (Id, xG22, yG22, 
+      wG22)
+    values (#{id,jdbcType=INTEGER}, #{xg22,jdbcType=DOUBLE}, #{yg22,jdbcType=DOUBLE}, 
+      #{wg22,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.philips.pojo.G22Matrix" >
+    insert into g22matrix
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="xg22 != null" >
+        xG22,
+      </if>
+      <if test="yg22 != null" >
+        yG22,
+      </if>
+      <if test="wg22 != null" >
+        wG22,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xg22 != null" >
+        #{xg22,jdbcType=DOUBLE},
+      </if>
+      <if test="yg22 != null" >
+        #{yg22,jdbcType=DOUBLE},
+      </if>
+      <if test="wg22 != null" >
+        #{wg22,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.philips.pojo.G22MatrixExample" resultType="java.lang.Integer" >
+    select count(*) from g22matrix
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update g22matrix
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.xg22 != null" >
+        xG22 = #{record.xg22,jdbcType=DOUBLE},
+      </if>
+      <if test="record.yg22 != null" >
+        yG22 = #{record.yg22,jdbcType=DOUBLE},
+      </if>
+      <if test="record.wg22 != null" >
+        wG22 = #{record.wg22,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update g22matrix
+    set Id = #{record.id,jdbcType=INTEGER},
+      xG22 = #{record.xg22,jdbcType=DOUBLE},
+      yG22 = #{record.yg22,jdbcType=DOUBLE},
+      wG22 = #{record.wg22,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.philips.pojo.G22Matrix" >
+    update g22matrix
+    <set >
+      <if test="xg22 != null" >
+        xG22 = #{xg22,jdbcType=DOUBLE},
+      </if>
+      <if test="yg22 != null" >
+        yG22 = #{yg22,jdbcType=DOUBLE},
+      </if>
+      <if test="wg22 != null" >
+        wG22 = #{wg22,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.philips.pojo.G22Matrix" >
+    update g22matrix
+    set xG22 = #{xg22,jdbcType=DOUBLE},
+      yG22 = #{yg22,jdbcType=DOUBLE},
+      wG22 = #{wg22,jdbcType=DOUBLE}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
