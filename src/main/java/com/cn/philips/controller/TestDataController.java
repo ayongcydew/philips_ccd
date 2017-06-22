@@ -3,6 +3,7 @@ package com.cn.philips.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cn.philips.pojo.AvgTestData;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
@@ -62,9 +65,13 @@ public class TestDataController {
 	
 	}
 	
-	@RequestMapping(value="/getAvg",method=RequestMethod.GET)
+	@RequestMapping(value="/getAvg",method=RequestMethod.POST)
 	@ResponseBody
-	public AvgTestData getAvgTestData(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public AvgTestData getAvgTestData(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
+	
+		JSONObject json = JSONObject.parseObject(requestBody);
+		String username = JSONObject.parseObject(json.get("user").toString()).get("userName").toString();
+		
 		String planName = request.getParameter("planName");
 		AvgTestData avgTestData = new AvgTestData();
 		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();

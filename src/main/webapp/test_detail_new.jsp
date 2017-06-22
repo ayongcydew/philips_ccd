@@ -72,7 +72,6 @@
 </html>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script>
 	// 这是我们的Model
 	var exampleData = {
@@ -143,6 +142,7 @@
 	        },
 		    
 		    getpercentsdcm: function () {
+		    	var testdata={"username": "Colin1"};
 		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm1; 
 		    	var url2=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm2;
 		    	var url3=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm3;
@@ -166,7 +166,7 @@
 	            },function(response){
 	              console.info(response);
 	            })
-	            this.$http.get(url4).then(function(data){
+	            this.$http.post(url4, testdata).then(function(data){
 	              var json=JSON.parse(data.body);
 	              this.testresault = json;
 	            },function(response){
