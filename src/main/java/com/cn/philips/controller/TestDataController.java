@@ -46,13 +46,24 @@ public class TestDataController {
 	@Resource
 	private DataHandleService dataHandleService;
 	
-	@RequestMapping(value="/getTestResault",method=RequestMethod.GET)
+	@RequestMapping(value="/getTestResault",method=RequestMethod.POST)
 	@ResponseBody
-	public String testResault(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public List<String> testResault(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
 		String planName = request.getParameter("planName");
 		Double threshold = Double.parseDouble(request.getParameter("threshold"));
-		Integer step = Integer.parseInt(request.getParameter("scdmStep"));
-		if (planName == "" || threshold == null || step == null) {
+		JSONObject json = JSONObject.parseObject(requestBody);
+		List<String> sdcmNameList = new ArrayList<String>();
+		sdcmNameList.add("sdcm1");
+		sdcmNameList.add("sdcm2");
+		sdcmNameList.add("sdcm3");
+		
+		List<Integer> sdcmList = new ArrayList<Integer>();
+		for (String sdcmTmp: sdcmNameList) {
+			Integer sdcm = Integer.parseInt(JSONObject.parseObject(json.get("SDCM").toString()).get(sdcmTmp).toString());
+			sdcmList.add(sdcm);
+		}
+		
+		if (planName == "" || threshold == null) {
 			throw new Exception("Parameter Error");
 		}
 		ArrayList<CcdTestData> ccdTestDataList = dataHandleService.GetAllTestData(planName);
@@ -60,8 +71,14 @@ public class TestDataController {
 		ArrayList<CcdTestData> effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName,ccdTestDataList, threshold, maxBri);
 		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList, threshold);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
-		String resault = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, step);
-		return resault;	
+		
+		List<String> sdcmResaultList = new ArrayList<String>();
+		for (Integer sdcm: sdcmList) {
+			String resault = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, sdcm);
+			sdcmResaultList.add(resault);
+		}
+		
+		return sdcmResaultList;	
 	
 	}
 	

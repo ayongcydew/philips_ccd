@@ -146,7 +146,7 @@ function init() {
 		    getplanlist: function (start,limit) {	
 		    	var url1=this.localhost + "/test/getPlanList" + "?start=" + start + "&limit=" + limit; 
 	            this.$http.get(url1).then(function(data){
-	              var tmpplanlist=JSON.parse(data.body);
+	              var tmpplanlist=data.body;
 	              this.planlist=tmpplanlist;
 	            },function(response){
 	              console.info(response);
