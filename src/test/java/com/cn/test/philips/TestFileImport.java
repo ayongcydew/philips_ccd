@@ -1,4 +1,4 @@
-package com.cn.testPhilips;
+package com.cn.test.philips;
 
 import java.util.ArrayList;
 import java.util.Date;

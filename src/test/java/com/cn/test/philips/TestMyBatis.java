@@ -1,4 +1,4 @@
-package com.cn.testPhilips;
+package com.cn.test.philips;
 
 import java.util.List;
 import java.math.*;
@@ -61,7 +61,7 @@ public class TestMyBatis {
 		int sum=0;
 		int total=0;
 		for(int i=0;i<userList.size();i++){		
-		     if (userList.get(i).getAge() != null) {//判断是否为数�?
+		     if (userList.get(i).getAge() != null) {//判断是否为数�??
 		          sum+= userList.get(i).getAge();
 		          total+=1;
 		     }
