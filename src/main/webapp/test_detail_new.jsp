@@ -35,37 +35,31 @@
 	<table border="1">
 		<caption>Test Resault</caption>
 		<tr>
-			<td>MaxL:</td>
-			<td><input type="text" name="maxL" v-model:value="testresault.maxBri" class="ui_input_txt02"></input></td>
+			<td class="ui_input_txt01">MaxL:</td>
+			<td class="ui_input_txt02">{{testresault.avgBri}}</td>
 		</tr>
 		<tr>
-			<td>AvgX:</td>
-			<td><input type="text" name="avgX" v-model:value="testresault.avgX" class="ui_input_txt02"></input></td>
+			<td class="ui_input_txt01">AvgX:</td>
+			<td class="ui_input_txt02">{{testresault.avgX}}</td>
 		</tr>
 		<tr>
-			<td>AvgY:</td>
-			<td><input type="text" name="avgY" v-model:value="testresault.avgY" class="ui_input_txt02"></input></td>
+			<td class="ui_input_txt01">AvgY:</td>
+			<td class="ui_input_txt02">{{testresault.avgY}}</td>
 		</tr>
 		<tr>
-			<td>AvgU:</td>
-			<td><input type="text" name="avgU" v-model:value="testresault.avgU" class="ui_input_txt02"></input></td>
+			<td class="ui_input_txt01">AvgU:</td>
+			<td class="ui_input_txt02">{{testresault.avgU}}</td>
 		</tr>
 		<tr>
-			<td>AvgV:</td>
-			<td><input type="text" name="avgV" v-model:value="testresault.avgV" class="ui_input_txt02"></input></td>
+			<td class="ui_input_txt01">AvgV:</td>
+			<td class="ui_input_txt02">{{testresault.avgV}}</td>
 		</tr>
-		<tr>
-			<td>SDCM1:</td>
-			<td><input type="text" name="percentSdcm1" v-model:value="percentsdcm1" class="ui_input_txt02"></input></td>
+								
+		<tr border="1" v-for="percentsdcm in percentsdcmlist">
+		<td class="ui_input_txt01">SDCM:</td>
+		<td class="ui_input_txt02">{{percentsdcm}}</td>
 		</tr>
-		<tr>
-			<td>SDCM2:</td>
-			<td><input type="text" name="percentSdcm2" v-model:value="percentsdcm2" class="ui_input_txt02"></input></td>
-		</tr>
-		<tr>
-			<td>SDCM3:</td>
-			<td><input type="text" name="percentSdcm3" v-model:value="percentsdcm3" class="ui_input_txt02"></input></td>
-		</tr>
+	
 	</table>
 </div>
 </body>
@@ -103,9 +97,7 @@
 			sdcm1: 5,
 			sdcm2: 7,
 			sdcm3: 10,
-			percentsdcm1: '',
-			percentsdcm2: '',
-			percentsdcm3: '',
+			percentsdcmlist: [],
 			options:[],
 			selectedplanname: ''
 		},
@@ -142,32 +134,19 @@
 	        },
 		    
 		    getpercentsdcm: function () {
-		    	var testdata={"username": "Colin1"};
-		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm1; 
-		    	var url2=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm2;
-		    	var url3=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold + "&scdmStep=" + this.sdcm3;
+		    	var sdcmlist={"SDCM": {	"sdcm1":5, "sdcm2":7, "sdcm3":10}};
+		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold; 
 		    	var url4=this.localhost + "/test/getAvg?planName="+ this.planname+ "&threshold=" + this.threshold; 
 
-	            this.$http.get(url1).then(function(data){
+	            this.$http.post(url1, sdcmlist).then(function(data){
 	              var json=data.body;
-	              this.percentsdcm1= eval("(" + json +")");
+	              this.percentsdcmlist= json;
 	            },function(response){
 	              console.info(response);
 	            })
-	            this.$http.get(url2).then(function(data){
+
+	            this.$http.get(url4).then(function(data){
 	              var json=data.body;
-	              this.percentsdcm2=eval("(" + json +")");
-	            },function(response){
-	              console.info(response);
-	            })
-	            this.$http.get(url3).then(function(data){
-	              var json=data.body;
-	              this.percentsdcm3=eval("(" + json +")");
-	            },function(response){
-	              console.info(response);
-	            })
-	            this.$http.post(url4, testdata).then(function(data){
-	              var json=JSON.parse(data.body);
 	              this.testresault = json;
 	            },function(response){
 	              console.info(response);

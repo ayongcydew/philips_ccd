@@ -82,13 +82,10 @@ public class TestDataController {
 	
 	}
 	
-	@RequestMapping(value="/getAvg",method=RequestMethod.POST)
+	@RequestMapping(value="/getAvg",method=RequestMethod.GET)
 	@ResponseBody
 	public AvgTestData getAvgTestData(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
 	
-		JSONObject json = JSONObject.parseObject(requestBody);
-		String username = JSONObject.parseObject(json.get("user").toString()).get("userName").toString();
-		
 		String planName = request.getParameter("planName");
 		AvgTestData avgTestData = new AvgTestData();
 		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
