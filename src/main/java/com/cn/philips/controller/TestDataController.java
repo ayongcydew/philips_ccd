@@ -50,33 +50,26 @@ public class TestDataController {
 	@ResponseBody
 	public List<String> testResault(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
 		String planName = request.getParameter("planName");
-		Double threshold = Double.parseDouble(request.getParameter("threshold"));
 		JSONObject json = JSONObject.parseObject(requestBody);
-		List<String> sdcmNameList = new ArrayList<String>();
-		sdcmNameList.add("sdcm1");
-		sdcmNameList.add("sdcm2");
-		sdcmNameList.add("sdcm3");
-		
-		List<Integer> sdcmList = new ArrayList<Integer>();
-		for (String sdcmTmp: sdcmNameList) {
-			Integer sdcm = Integer.parseInt(JSONObject.parseObject(json.get("SDCM").toString()).get(sdcmTmp).toString());
-			sdcmList.add(sdcm);
-		}
-		
-		if (planName == "" || threshold == null) {
+	
+		if (planName == "") {
 			throw new Exception("Parameter Error");
 		}
 		ArrayList<CcdTestData> ccdTestDataList = dataHandleService.GetAllTestData(planName);
 		Double maxBri = dataHandleService.GetMaxBri(ccdTestDataList);
-		ArrayList<CcdTestData> effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName,ccdTestDataList, threshold, maxBri);
-		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList, threshold);
+		ArrayList<CcdTestData> effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName,ccdTestDataList, maxBri);
+		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
 		
+//		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig();
+		
 		List<String> sdcmResaultList = new ArrayList<String>();
-		for (Integer sdcm: sdcmList) {
-			String resault = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, sdcm);
-			sdcmResaultList.add(resault);
-		}
+		String resault1 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 5);
+		sdcmResaultList.add(resault1);
+		String resault2 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 7);
+		sdcmResaultList.add(resault2);
+		String resault3 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 10);
+		sdcmResaultList.add(resault3);
 		
 		return sdcmResaultList;	
 	
@@ -89,9 +82,8 @@ public class TestDataController {
 		String planName = request.getParameter("planName");
 		AvgTestData avgTestData = new AvgTestData();
 		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
-		Double threshold = Double.parseDouble(request.getParameter("threshold"));
 		ccdTestDataList = dataHandleService.GetAllTestData(planName);
-		avgTestData = dataHandleService.GetAvg(planName,ccdTestDataList, threshold);
+		avgTestData = dataHandleService.GetAvg(planName,ccdTestDataList);
 		return avgTestData;	
 	
 	}

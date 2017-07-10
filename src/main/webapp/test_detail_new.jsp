@@ -134,9 +134,9 @@
 	        },
 		    
 		    getpercentsdcm: function () {
-		    	var sdcmlist={"SDCM": {	"sdcm1":5, "sdcm2":7, "sdcm3":10}};
-		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname+ "&threshold=" + this.threshold; 
-		    	var url4=this.localhost + "/test/getAvg?planName="+ this.planname+ "&threshold=" + this.threshold; 
+		    	var sdcmlist={};
+		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname; 
+		    	var url4=this.localhost + "/test/getAvg?planName="+ this.planname; 
 
 	            this.$http.post(url1, sdcmlist).then(function(data){
 	              var json=data.body;

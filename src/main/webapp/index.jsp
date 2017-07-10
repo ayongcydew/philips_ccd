@@ -204,7 +204,8 @@
 			});*/
             data = [
             {"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"基础数据","resourceOrder":0,"resourceType":""},
-            {"accessPath":"test_list.jsp","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":7,"resourceName":"测试管理","resourceOrder":0,"resourceType":""}
+            {"accessPath":"test_list.jsp","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":7,"resourceName":"测试管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"test_config.jsp","checked":false,"delFlag":1,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":8,"resourceName":"数据配置管理","resourceOrder":0,"resourceType":""}
             ];
             // 如果返回数据不为空，加载"测试模块"目录
             if(data != null){

@@ -51,7 +51,7 @@ public class TestFileImport {
 		String Y = "C:\\20170120\\y.txt";
 		String U = "C:\\20170120\\u.txt";
 		String V = "C:\\20170120\\v.txt";
-		importTestDataService.InsertTestData(planName, description, startTime, operatorName, Bri, X, Y, U, V);;
+		importTestDataService.InsertTestData(planName, description, startTime, operatorName, Bri, X, Y, U, V);
 	}
 	
 	@Test

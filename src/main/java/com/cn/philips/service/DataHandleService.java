@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.cn.philips.pojo.AvgTestData;
+//import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 
@@ -12,9 +13,9 @@ public interface DataHandleService {
 	
 	public ArrayList<CcdTestData> GetAllTestData(String planName) throws Exception;
 	
-	public AvgTestData GetAvg(String planName, ArrayList<CcdTestData> ccdTestDataList, Double threshold);
+	public AvgTestData GetAvg(String planName, ArrayList<CcdTestData> ccdTestDataList);
 	
-	public ArrayList<CcdTestData> GetEffectiveTestData(String planName, ArrayList<CcdTestData> ccdTestDataList, Double threshold, Double maxBri);
+	public ArrayList<CcdTestData> GetEffectiveTestData(String planName, ArrayList<CcdTestData> ccdTestDataList, Double maxBri);
 	
 	public Double CalculateGVaule(String TypeOfValue, AvgTestData avgTestData);
 	
@@ -27,4 +28,6 @@ public interface DataHandleService {
 	public ArrayList<String> GetPlanNameList();
 	
 	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit);
+	
+//	public CcdTestConfig GetCcdTestConfig();
 }
