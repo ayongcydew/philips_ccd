@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.philips.pojo.AvgTestData;
+import com.cn.philips.pojo.CcdTestConfigT;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanNew;
@@ -61,14 +62,14 @@ public class TestDataController {
 		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
 		
-//		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig();
+		CcdTestConfigT ccdTestConfig = dataHandleService.GetCcdTestConfig();
 		
 		List<String> sdcmResaultList = new ArrayList<String>();
-		String resault1 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 5);
+		String resault1 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm1());
 		sdcmResaultList.add(resault1);
-		String resault2 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 7);
+		String resault2 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm2());
 		sdcmResaultList.add(resault2);
-		String resault3 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, 10);
+		String resault3 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm3());
 		sdcmResaultList.add(resault3);
 		
 		return sdcmResaultList;	
@@ -116,6 +117,14 @@ public class TestDataController {
 			ccdTestPlanListNew.add(ccdTestPlanNew);
 		}
 		return ccdTestPlanListNew;	
+	
+	}
+	
+	@RequestMapping(value="/getTestConfig",method=RequestMethod.GET)
+	@ResponseBody
+	public CcdTestConfigT getTestConfig(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		CcdTestConfigT ccdTestConfig = dataHandleService.GetCcdTestConfig();
+		return ccdTestConfig;
 	
 	}
 	

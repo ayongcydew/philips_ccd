@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.cn.philips.pojo.AvgTestData;
-//import com.cn.philips.pojo.CcdTestConfig;
+import com.cn.philips.pojo.CcdTestConfigT;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 
@@ -29,5 +29,5 @@ public interface DataHandleService {
 	
 	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit);
 	
-//	public CcdTestConfig GetCcdTestConfig();
+	public CcdTestConfigT GetCcdTestConfig();
 }

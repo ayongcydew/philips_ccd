@@ -11,27 +11,6 @@
 <body>
 	当前位置：基础数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">测试详情</span>
 <div id="container">
-	<table cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
-		<tr>
-			<td>Threshold(L/maxL):</td>
-		</tr>
-		<tr>
-			<td><input type="text" name="Threshold" v-model:value="threshold" class="ui_input_txt02"></input></td>
-		</tr>
-
-		<tr><td>SDCM:</td></tr>
-		<tr>
-			<td><input type="text" name="sdcm1" v-model:value="sdcm1" class="ui_input_txt02"></input></td>
-		</tr>
-		<tr>
-			<td><input type="text" name="sdcm2" v-model:value="sdcm2" class="ui_input_txt02"></input></td>
-		</tr>
-		<tr>
-			<td><input type="text" name="sdcm3" v-model:value="sdcm3" class="ui_input_txt02"></input></td>
-		</tr>
-	</table>
-
-<br></br><br></br><br></br><br></br><br></br>
 	<table border="1">
 		<caption>Test Resault</caption>
 		<tr>

@@ -11,12 +11,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.cn.philips.dao.CcdTestConfigTMapper;
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.CcdTestPlanMapper;
 import com.cn.philips.dao.G11MatrixMapper;
 import com.cn.philips.dao.G12MatrixMapper;
 import com.cn.philips.dao.G22MatrixMapper;
 import com.cn.philips.pojo.AvgTestData;
+import com.cn.philips.pojo.CcdTestConfigT;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
@@ -47,6 +49,9 @@ public class DataHandleServiceImpl implements DataHandleService {
 	@Resource
 	private G22MatrixMapper g22MatrixMapper;
 	
+	@Resource
+	private CcdTestConfigTMapper ccdTestConfigTMapper;
+	
 	@Override
 	public ArrayList<CcdTestData> GetAllTestData(String planName) throws Exception {
 		CcdTestDataExample ccdTestDataExample = new CcdTestDataExample();
@@ -68,9 +73,8 @@ public class DataHandleServiceImpl implements DataHandleService {
 		
 		Double maxBri = GetMaxBri(ccdTestDataList);
 		
-//		CcdTestConfig ccdTestConfig = GetCcdTestConfig();
-//		Double threshold = ccdTestConfig.getThreshold();
-		Double threshold = 0.3;
+		CcdTestConfigT ccdTestConfig = GetCcdTestConfig();
+		Double threshold = ccdTestConfig.getThreshold();
 		
 		ArrayList<CcdTestData> effectiveCCDtestDataList =  GetEffectiveTestData(planName, ccdTestDataList, maxBri);
 		
@@ -239,9 +243,9 @@ public class DataHandleServiceImpl implements DataHandleService {
 		CcdTestPlanExample.Criteria exampleCriteria = ccdTestPlanExample.createCriteria();
 		exampleCriteria.andPlanNameEqualTo(planName);
 		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
-//		CcdTestConfig ccdTestConfig = GetCcdTestConfig();
-//		Double threshold = ccdTestConfig.getThreshold();
-		Double threshold = 0.3;
+		CcdTestConfigT ccdTestConfig = GetCcdTestConfig();
+		Double threshold = ccdTestConfig.getThreshold();
+//		Double threshold = 0.3;
 		
 		ArrayList<CcdTestData> effctiveCCDtestDataList = new ArrayList<CcdTestData>();
 		Integer lenX = ccdTestPlanList.get(0).getPixelX();
@@ -299,12 +303,11 @@ public class DataHandleServiceImpl implements DataHandleService {
 		return ccdTestPlanList;
 	}
 
-//	@Override
-//	public CcdTestConfig GetCcdTestConfig() {
-////		CcdTestConfig ccdTestConfig = new CcdTestConfig();
-////		ccdTestConfig = ccdTestConfigMapper.selectByPrimaryKey(1);
-//		// TODO Auto-generated method stub
-////		return ccdTestConfig;
-//		return null;
-//	}
+	@Override
+	public CcdTestConfigT GetCcdTestConfig() {
+		CcdTestConfigT ccdTestConfig = new CcdTestConfigT();
+		ccdTestConfig = ccdTestConfigTMapper.selectByPrimaryKey(1);
+		// TODO Auto-generated method stub
+		return ccdTestConfig;
+	}
 }
