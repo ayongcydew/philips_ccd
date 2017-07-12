@@ -60,11 +60,10 @@ public class TestFileImport {
 		AvgTestData avgTestData = new AvgTestData();
 		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
 		
-		Double threshold = 0.3;
 		String planName = "999";
 		Integer step = 3;
 		ccdTestDataList = dataHandleService.GetAllTestData(planName);
-		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList, threshold);
+		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
 		
 		System.out.println("test");
@@ -80,13 +79,12 @@ public class TestFileImport {
 //		CcdTestData ccdTestData = new CcdTestData();
 //		ccdTestData.setX(0.4572763);
 //		ccdTestData.setY(0.3915107);
-		Double threshold = 0.3;
 		String planName = "999";
 		Integer step = 7;		
 		ccdTestDataList = dataHandleService.GetAllTestData(planName);
 		Double maxBri = dataHandleService.GetMaxBri(ccdTestDataList);
-		effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName, ccdTestDataList, threshold, maxBri);
-		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList, threshold);
+		effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName, ccdTestDataList, maxBri);
+		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
 		String xxx = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, step);
 		System.out.println(xxx);
