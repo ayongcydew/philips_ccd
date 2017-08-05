@@ -9,10 +9,14 @@
 </head>
 
 <body>
-	当前位置：基础数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">测试详情</span>
+	当前位置：测试数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">测试详情</span>
 <div id="container">
 	<table border="1">
 		<caption>Test Resault</caption>
+		<tr>
+			<td class="ui_input_txt01">TestName:</td>
+			<td class="ui_input_txt02">{{planname}}</td>
+		</tr>
 		<tr>
 			<td class="ui_input_txt01">MaxL:</td>
 			<td class="ui_input_txt02">{{testresault.avgBri}}</td>
@@ -26,11 +30,11 @@
 			<td class="ui_input_txt02">{{testresault.avgY}}</td>
 		</tr>
 		<tr>
-			<td class="ui_input_txt01">AvgU:</td>
+			<td class="ui_input_txt01">AvgU':</td>
 			<td class="ui_input_txt02">{{testresault.avgU}}</td>
 		</tr>
 		<tr>
-			<td class="ui_input_txt01">AvgV:</td>
+			<td class="ui_input_txt01">AvgV':</td>
 			<td class="ui_input_txt02">{{testresault.avgV}}</td>
 		</tr>
 								

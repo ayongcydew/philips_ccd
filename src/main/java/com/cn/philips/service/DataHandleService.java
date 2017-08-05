@@ -30,4 +30,6 @@ public interface DataHandleService {
 	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit);
 	
 	public CcdTestConfigT GetCcdTestConfig();
+	
+	public CcdTestData GetMaxDeltaValue(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList);
 }
