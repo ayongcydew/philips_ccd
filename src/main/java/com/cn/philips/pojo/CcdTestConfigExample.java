@@ -3,14 +3,14 @@ package com.cn.philips.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CcdTestConfigTExample {
+public class CcdTestConfigExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public CcdTestConfigTExample() {
+    public CcdTestConfigExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -161,6 +161,66 @@ public class CcdTestConfigTExample {
 
         public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidIsNull() {
+            addCriterion("planid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidIsNotNull() {
+            addCriterion("planid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidEqualTo(Integer value) {
+            addCriterion("planid =", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotEqualTo(Integer value) {
+            addCriterion("planid <>", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidGreaterThan(Integer value) {
+            addCriterion("planid >", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("planid >=", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidLessThan(Integer value) {
+            addCriterion("planid <", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidLessThanOrEqualTo(Integer value) {
+            addCriterion("planid <=", value, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidIn(List<Integer> values) {
+            addCriterion("planid in", values, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotIn(List<Integer> values) {
+            addCriterion("planid not in", values, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidBetween(Integer value1, Integer value2) {
+            addCriterion("planid between", value1, value2, "planid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlanidNotBetween(Integer value1, Integer value2) {
+            addCriterion("planid not between", value1, value2, "planid");
             return (Criteria) this;
         }
 

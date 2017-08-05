@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cn.philips.dao.CcdTestConfigTMapper" >
-  <resultMap id="BaseResultMap" type="com.cn.philips.pojo.CcdTestConfigT" >
+<mapper namespace="com.cn.philips.dao.CcdTestConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.philips.pojo.CcdTestConfig" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="planid" property="planid" jdbcType="INTEGER" />
     <result column="Threshold" property="threshold" jdbcType="DOUBLE" />
     <result column="sdcm1" property="sdcm1" jdbcType="INTEGER" />
     <result column="sdcm2" property="sdcm2" jdbcType="INTEGER" />
@@ -67,9 +68,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, Threshold, sdcm1, sdcm2, sdcm3
+    id, planid, Threshold, sdcm1, sdcm2, sdcm3
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.CcdTestConfigTExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.CcdTestConfigExample" >
     select
     <if test="distinct" >
       distinct
@@ -94,23 +95,28 @@
     delete from ccd_test_config
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cn.philips.pojo.CcdTestConfigTExample" >
+  <delete id="deleteByExample" parameterType="com.cn.philips.pojo.CcdTestConfigExample" >
     delete from ccd_test_config
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cn.philips.pojo.CcdTestConfigT" >
-    insert into ccd_test_config (id, Threshold, sdcm1, 
-      sdcm2, sdcm3)
-    values (#{id,jdbcType=INTEGER}, #{threshold,jdbcType=DOUBLE}, #{sdcm1,jdbcType=INTEGER}, 
-      #{sdcm2,jdbcType=INTEGER}, #{sdcm3,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.cn.philips.pojo.CcdTestConfig" >
+    insert into ccd_test_config (id, planid, Threshold, 
+      sdcm1, sdcm2, sdcm3
+      )
+    values (#{id,jdbcType=INTEGER}, #{planid,jdbcType=INTEGER}, #{threshold,jdbcType=DOUBLE}, 
+      #{sdcm1,jdbcType=INTEGER}, #{sdcm2,jdbcType=INTEGER}, #{sdcm3,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.cn.philips.pojo.CcdTestConfigT" >
+  <insert id="insertSelective" parameterType="com.cn.philips.pojo.CcdTestConfig" >
     insert into ccd_test_config
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="planid != null" >
+        planid,
       </if>
       <if test="threshold != null" >
         Threshold,
@@ -129,6 +135,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="planid != null" >
+        #{planid,jdbcType=INTEGER},
+      </if>
       <if test="threshold != null" >
         #{threshold,jdbcType=DOUBLE},
       </if>
@@ -143,7 +152,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cn.philips.pojo.CcdTestConfigTExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.cn.philips.pojo.CcdTestConfigExample" resultType="java.lang.Integer" >
     select count(*) from ccd_test_config
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -154,6 +163,9 @@
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planid != null" >
+        planid = #{record.planid,jdbcType=INTEGER},
       </if>
       <if test="record.threshold != null" >
         Threshold = #{record.threshold,jdbcType=DOUBLE},
@@ -175,6 +187,7 @@
   <update id="updateByExample" parameterType="map" >
     update ccd_test_config
     set id = #{record.id,jdbcType=INTEGER},
+      planid = #{record.planid,jdbcType=INTEGER},
       Threshold = #{record.threshold,jdbcType=DOUBLE},
       sdcm1 = #{record.sdcm1,jdbcType=INTEGER},
       sdcm2 = #{record.sdcm2,jdbcType=INTEGER},
@@ -183,9 +196,12 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cn.philips.pojo.CcdTestConfigT" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.philips.pojo.CcdTestConfig" >
     update ccd_test_config
     <set >
+      <if test="planid != null" >
+        planid = #{planid,jdbcType=INTEGER},
+      </if>
       <if test="threshold != null" >
         Threshold = #{threshold,jdbcType=DOUBLE},
       </if>
@@ -201,9 +217,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cn.philips.pojo.CcdTestConfigT" >
+  <update id="updateByPrimaryKey" parameterType="com.cn.philips.pojo.CcdTestConfig" >
     update ccd_test_config
-    set Threshold = #{threshold,jdbcType=DOUBLE},
+    set planid = #{planid,jdbcType=INTEGER},
+      Threshold = #{threshold,jdbcType=DOUBLE},
       sdcm1 = #{sdcm1,jdbcType=INTEGER},
       sdcm2 = #{sdcm2,jdbcType=INTEGER},
       sdcm3 = #{sdcm3,jdbcType=INTEGER}

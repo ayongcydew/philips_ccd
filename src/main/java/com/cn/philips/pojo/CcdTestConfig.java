@@ -1,7 +1,9 @@
 package com.cn.philips.pojo;
 
-public class CcdTestConfigT {
+public class CcdTestConfig {
     private Integer id;
+
+    private Integer planid;
 
     private Double threshold;
 
@@ -17,6 +19,14 @@ public class CcdTestConfigT {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPlanid() {
+        return planid;
+    }
+
+    public void setPlanid(Integer planid) {
+        this.planid = planid;
     }
 
     public Double getThreshold() {

@@ -32,7 +32,7 @@ import com.cn.philips.pojo.G22MatrixExample;
 import com.cn.philips.service.DataHandleService;
 
 @Service("dataHandleService")
-public class DataHandleServiceImpl implements DataHandleService {
+public class DataHandleServiceImpl2 implements DataHandleService {
 
 	@Resource
 	private CcdTestDataMapper ccdTestDataMapper;
@@ -239,13 +239,18 @@ public class DataHandleServiceImpl implements DataHandleService {
 
 	
 	public ArrayList<CcdTestData> GetEffectiveTestData(String planName, ArrayList<CcdTestData> ccdTestDataList, Double maxBri) {
+		
+		// fetch test data from database
 		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
 		CcdTestPlanExample.Criteria exampleCriteria = ccdTestPlanExample.createCriteria();
 		exampleCriteria.andPlanNameEqualTo(planName);
 		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
+		
+		// fetch threshold value from testplan.
+		Integer panId = ccdTestPlanList.get(0).getId();
+		
 		CcdTestConfig ccdTestConfig = GetCcdTestConfig();
 		Double threshold = ccdTestConfig.getThreshold();
-//		Double threshold = 0.3;
 		
 		ArrayList<CcdTestData> effctiveCCDtestDataList = new ArrayList<CcdTestData>();
 		Integer lenX = ccdTestPlanList.get(0).getPixelX();
