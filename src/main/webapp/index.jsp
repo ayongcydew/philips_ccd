@@ -203,9 +203,11 @@
 				}
 			});*/
             data = [
-            {"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"基础数据","resourceOrder":0,"resourceType":""},
-            {"accessPath":"test_list.jsp","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":7,"resourceName":"测试管理","resourceOrder":0,"resourceType":""},
-            {"accessPath":"test_config.jsp","checked":false,"delFlag":1,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":8,"resourceName":"数据配置管理","resourceOrder":0,"resourceType":""}
+            {"accessPath":"","checked":false,"delFlag":0,"parentID":1,"resourceCode":"","resourceDesc":"","resourceGrade":2,"resourceID":3,"resourceName":"测试数据管理","resourceOrder":0,"resourceType":""},
+            {"accessPath":"test_list.jsp","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":7,"resourceName":"测试结果","resourceOrder":0,"resourceType":""},
+            {"accessPath":"test_config.jsp","checked":false,"delFlag":1,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":8,"resourceName":"数据配置","resourceOrder":0,"resourceType":""},
+            {"accessPath":"turntable_config.jsp","checked":false,"delFlag":2,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":9,"resourceName":"转台配置","resourceOrder":0,"resourceType":""},
+            {"accessPath":"rules_set.jsp","checked":false,"delFlag":3,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":10,"resourceName":"规则设定","resourceOrder":0,"resourceType":""}
             ];
             // 如果返回数据不为空，加载"测试模块"目录
             if(data != null){

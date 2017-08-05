@@ -44,7 +44,6 @@
 					<table id="listTable" class="table" cellspacing="0" cellpadding="0" width="100%"
 						align="center" border="0">
 						<tr>
-							<th></th>
 							<th>测试名称</th>
 							<th>描述</th>
 							<th>测试结果</th>
@@ -53,7 +52,6 @@
 							<th>操作</th>
 						</tr>
 						<tr v-for="data in planlist">
-							<td><input type="checkbox" name="testlist" value="" class="mybox" onclick="checkBox($(this));"/></td>
 							<td>{{data.planName}}</td>
 							<td>{{data.description}}</td>
 							<td>PASS</td>
@@ -66,11 +64,11 @@
 				<div class="ui_tb_h30">
 					<div class="ui_flt" style="height: 30px; line-height: 30px;">
 						共有
-						<span class="ui_txt_bold04">90</span>
+						<span class="ui_txt_bold04">10</span>
 						条记录，当前第
 						<span class="ui_txt_bold04">1
 						/
-						9</span>
+						2</span>
 						页
 					</div>
 					<div class="ui_frt">

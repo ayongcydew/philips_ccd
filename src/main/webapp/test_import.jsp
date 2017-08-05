@@ -8,7 +8,7 @@
 <link href="style/css/common_style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	当前位置：基础数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">数据导入</span>
+	当前位置：测试数据&nbsp;>&nbsp;<span style="color: #1A5CC6;">数据导入</span>
 <form id="submitForm" name="submitForm" action="${pageContext.request.contextPath}/import/testData" 
 		enctype="multipart/form-data" method="post">
 	<div id="container">
@@ -57,13 +57,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="ui_text_rt">U</td>
+					<td class="ui_text_rt">U'</td>
 					<td class="ui_text_lt">
 						<input type="file" id="file4" name="file4"  value="" class="ui_input_txt03"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="ui_text_rt">V</td>
+					<td class="ui_text_rt">V'</td>
 					<td class="ui_text_lt">
 						<input type="file" id="file5" name="file5"  value="" class="ui_input_txt03"/>
 					</td>

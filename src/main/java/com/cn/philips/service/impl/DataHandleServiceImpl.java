@@ -310,4 +310,10 @@ public class DataHandleServiceImpl implements DataHandleService {
 		// TODO Auto-generated method stub
 		return ccdTestConfig;
 	}
+
+	@Override
+	public CcdTestData GetMaxDeltaValue(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
