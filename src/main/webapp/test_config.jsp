@@ -10,25 +10,26 @@
 
 <body>
 <div id="container">
-	<table cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
-		<tr>
-			<td>Threshold(L/maxL):</td>
-		</tr>
-		<tr>
-			<td><input type="text" name="Threshold" v-model:value="threshold" class="ui_input_txt02"></input></td>
-		</tr>
-
-		<tr><td>SDCM:</td></tr>
-		<tr>
-			<td><input type="text" name="sdcm1" v-model:value="sdcm1" class="ui_input_txt02"></input></td>
-		</tr>
-		<tr>
-			<td><input type="text" name="sdcm2" v-model:value="sdcm2" class="ui_input_txt02"></input></td>
-		</tr>
-		<tr>
-			<td><input type="text" name="sdcm3" v-model:value="sdcm3" class="ui_input_txt02"></input></td>
-		</tr>
-	</table>
+	<div class="ui_content">
+		<div class="ui_tb">
+			<table id="listTable" class="table" cellspacing="0" cellpadding="0" width="100%"
+				align="center" border="0">
+				<tr>
+					<th>测试名称</th>
+					<th>THRESHOLD</th>
+					<th>SDCM1</th>
+					<th>SDCM2</th>
+					<th>SDCM3</th>
+				</tr>
+				<tr v-for="data in configlist">
+					<td>{{data.planName}}</td>
+					<td>{{data.threshold}}</td>
+					<td>{{data.sdcm1}}</td>
+					<td>{{data.sdcm2}}</td>
+					<td>{{data.sdcm3}}</td>
+				</tr>
+			</table>
+		</div>
 </div>
 </body>
 </html>
@@ -45,6 +46,7 @@
 			sdcm1: '',
 			sdcm2: '',
 			sdcm3: '',
+			configlist: [],
 		},
 		
 		created: function () {
@@ -56,13 +58,10 @@
 		    
 		    getsdcm: function () {
 		    	var sdcmlist={};
-		    	var url1=this.localhost + "/test/getTestConfig";
+		    	var url1=this.localhost + "/testManage/getTestConfigList";
 	            this.$http.get(url1).then(function(data){
 	              var json=data.body;
-	              this.threshold= json.threshold;
-	              this.sdcm1= json.sdcm1;
-	              this.sdcm2= json.sdcm2;
-	              this.sdcm3= json.sdcm3;
+	              this.configlist = json
 	            },function(response){
 	              console.info(response);
 	            })

@@ -15,7 +15,7 @@
 <div id="container">
 	<form id="submitForm" name="submitForm" action="" method="post">
 		<input type="hidden" name="allIDCheck" value="" id="allIDCheck"/>
-		<input type="hidden" name="fangyuanEntity.fyXqName" value="" id="fyXqName"/>
+		<input type="hidden" name="PlanName" value="" id="PlanName"/>
 		<div id="container1">
 			<div class="ui_content">
 				<div class="ui_text_indent">
@@ -128,7 +128,7 @@ function init() {
 		el : '#container',
 		data : {
 			localhost:'${pageContext.request.contextPath}',
-			planlist:[] ,
+			planlist: [] ,
 			page: 1,
 			start: 0,
 			limit: 10
@@ -142,7 +142,7 @@ function init() {
 	    methods: {
 
 		    getplanlist: function (start,limit) {	
-		    	var url1=this.localhost + "/test/getPlanList" + "?start=" + start + "&limit=" + limit; 
+		    	var url1=this.localhost + "/testManage/getPlanList" + "?start=" + start + "&limit=" + limit; 
 	            this.$http.get(url1).then(function(data){
 	              var tmpplanlist=data.body;
 	              this.planlist=tmpplanlist;

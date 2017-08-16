@@ -20,7 +20,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.philips.pojo.AvgTestData;
+import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
+import com.cn.philips.pojo.User;
 import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.ImportTestDataService;;
 
@@ -107,4 +109,9 @@ public class TestFileImport {
 		System.out.println("test");
 	}
 	
+	@Test
+	public void test6() {
+		List<CcdTestConfigResponse> ccdTestConfigList = dataHandleService.GetCcdTestConfigList();
+		logger.info(JSON.toJSONString(ccdTestConfigList));
+	}
 }

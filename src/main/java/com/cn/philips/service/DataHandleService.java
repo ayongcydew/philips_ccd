@@ -3,9 +3,11 @@ package com.cn.philips.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 
 import com.cn.philips.pojo.AvgTestData;
 import com.cn.philips.pojo.CcdTestConfig;
+import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 
@@ -29,7 +31,9 @@ public interface DataHandleService {
 	
 	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit);
 	
-	public CcdTestConfig GetCcdTestConfig();
+	public CcdTestConfig GetCcdTestConfig(String planName);
+	
+	public List<CcdTestConfigResponse> GetCcdTestConfigList();
 	
 	public CcdTestData GetMaxDeltaValue(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList);
 }

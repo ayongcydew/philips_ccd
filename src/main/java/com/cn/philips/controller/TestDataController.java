@@ -28,7 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cn.philips.pojo.AvgTestData;
-import com.cn.philips.pojo.CcdTestConfigT;
+import com.cn.philips.pojo.CcdTestConfig;
+import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanNew;
@@ -39,7 +40,7 @@ import com.cn.philips.service.IUserService;
 import com.cn.philips.service.UserCCDService;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/testManage")
 public class TestDataController {
 	@Resource
 	private UserCCDService userCCDService;
@@ -62,7 +63,7 @@ public class TestDataController {
 		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
 		
-		CcdTestConfigT ccdTestConfig = dataHandleService.GetCcdTestConfig();
+		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig(planName);
 		
 		List<String> sdcmResaultList = new ArrayList<String>();
 		String resault1 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm1());
@@ -120,11 +121,11 @@ public class TestDataController {
 	
 	}
 	
-	@RequestMapping(value="/getTestConfig",method=RequestMethod.GET)
+	@RequestMapping(value="/getTestConfigList",method=RequestMethod.GET)
 	@ResponseBody
-	public CcdTestConfigT getTestConfig(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		CcdTestConfigT ccdTestConfig = dataHandleService.GetCcdTestConfig();
-		return ccdTestConfig;
+	public List<CcdTestConfigResponse> getTestConfig(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		List<CcdTestConfigResponse> ccdTestConfigList = dataHandleService.GetCcdTestConfigList();
+		return ccdTestConfigList;
 	
 	}
 	

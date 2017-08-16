@@ -95,7 +95,7 @@
 	    methods: {
 		    
 		    getplannamelist: function () {	
-		    	var url1=this.localhost + "/test/getPlanNameList"; 
+		    	var url1=this.localhost + "/testManage/getPlanNameList"; 
 	            this.$http.get(url1).then(function(data){
 	              var json=JSON.parse(data.body);
 	              this.options=json;
@@ -118,8 +118,8 @@
 		    
 		    getpercentsdcm: function () {
 		    	var sdcmlist={};
-		    	var url1=this.localhost + "/test/getTestResault?planName="+ this.planname; 
-		    	var url4=this.localhost + "/test/getAvg?planName="+ this.planname; 
+		    	var url1=this.localhost + "/testManage/getTestResault?planName="+ this.planname; 
+		    	var url4=this.localhost + "/testManage/getAvg?planName="+ this.planname; 
 
 	            this.$http.post(url1, sdcmlist).then(function(data){
 	              var json=data.body;

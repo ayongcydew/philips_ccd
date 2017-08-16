@@ -19,6 +19,8 @@ import com.cn.philips.dao.G12MatrixMapper;
 import com.cn.philips.dao.G22MatrixMapper;
 import com.cn.philips.pojo.AvgTestData;
 import com.cn.philips.pojo.CcdTestConfig;
+import com.cn.philips.pojo.CcdTestConfigExample;
+import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
@@ -73,7 +75,7 @@ public class DataHandleServiceImpl implements DataHandleService {
 		
 		Double maxBri = GetMaxBri(ccdTestDataList);
 		
-		CcdTestConfig ccdTestConfig = GetCcdTestConfig();
+		CcdTestConfig ccdTestConfig = GetCcdTestConfig(planName);
 		Double threshold = ccdTestConfig.getThreshold();
 		
 		ArrayList<CcdTestData> effectiveCCDtestDataList =  GetEffectiveTestData(planName, ccdTestDataList, maxBri);
@@ -239,17 +241,16 @@ public class DataHandleServiceImpl implements DataHandleService {
 
 	
 	public ArrayList<CcdTestData> GetEffectiveTestData(String planName, ArrayList<CcdTestData> ccdTestDataList, Double maxBri) {
-		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
-		CcdTestPlanExample.Criteria exampleCriteria = ccdTestPlanExample.createCriteria();
-		exampleCriteria.andPlanNameEqualTo(planName);
-		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
-		CcdTestConfig ccdTestConfig = GetCcdTestConfig();
+		
+		CcdTestPlan ccdTestPlan = GetCcdTestPlanByName(planName);
+		Integer planId = ccdTestPlan.getId();
+		
+		CcdTestConfig ccdTestConfig = GetCcdTestConfig(planName);
 		Double threshold = ccdTestConfig.getThreshold();
-//		Double threshold = 0.3;
 		
 		ArrayList<CcdTestData> effctiveCCDtestDataList = new ArrayList<CcdTestData>();
-		Integer lenX = ccdTestPlanList.get(0).getPixelX();
-		Integer lenY = ccdTestPlanList.get(0).getPixelY();
+		Integer lenX = ccdTestPlan.getPixelX();
+		Integer lenY = ccdTestPlan.getPixelY();
 		
 		for (int i = 0; i < lenX; i++) {
 			List<CcdTestData> tmpList =  ccdTestDataList.subList(i*lenY, (i+1)*lenY);
@@ -304,11 +305,43 @@ public class DataHandleServiceImpl implements DataHandleService {
 	}
 
 	@Override
-	public CcdTestConfig GetCcdTestConfig() {
+	public CcdTestConfig GetCcdTestConfig(String planName) {
+		
+		CcdTestPlan ccdTestPlan = GetCcdTestPlanByName(planName);
+		
+		Integer planId = ccdTestPlan.getId();
+		
 		CcdTestConfig ccdTestConfig = new CcdTestConfig();
+		CcdTestConfigExample ccdTestConfigExample = new CcdTestConfigExample();
+		CcdTestConfigExample.Criteria criteria1 = ccdTestConfigExample.createCriteria();
+		criteria1.andPlanidEqualTo(planId);
 		ccdTestConfig = ccdTestConfigMapper.selectByPrimaryKey(1);
 		// TODO Auto-generated method stub
 		return ccdTestConfig;
+	}
+	
+	@Override
+	public List<CcdTestConfigResponse> GetCcdTestConfigList() {
+		List<CcdTestConfig> ccdTestConfigList = new ArrayList<CcdTestConfig>();
+		CcdTestConfigExample ccdTestConfigExample = new CcdTestConfigExample();
+		CcdTestConfigExample.Criteria criteria = ccdTestConfigExample.createCriteria();
+		criteria.andIdIsNotNull();
+		ccdTestConfigList = ccdTestConfigMapper.selectByExample(ccdTestConfigExample);
+		List<CcdTestConfigResponse> ccdTestConfigResponseList = new ArrayList<CcdTestConfigResponse>();
+		for (CcdTestConfig ccdTestConfig : ccdTestConfigList) {
+			CcdTestPlan ccdTestPlan = ccdTestPlanMapper.selectByPrimaryKey(ccdTestConfig.getPlanid());
+			CcdTestConfigResponse ccdTestConfigResponseTemp = new CcdTestConfigResponse();
+			ccdTestConfigResponseTemp.setId(ccdTestConfig.getId());
+			ccdTestConfigResponseTemp.setPlanid(ccdTestConfig.getPlanid());
+			ccdTestConfigResponseTemp.setThreshold(ccdTestConfig.getThreshold());
+			ccdTestConfigResponseTemp.setPlanName(ccdTestPlan.getPlanName());
+			ccdTestConfigResponseTemp.setSdcm1(ccdTestConfig.getSdcm1());
+			ccdTestConfigResponseTemp.setSdcm2(ccdTestConfig.getSdcm2());
+			ccdTestConfigResponseTemp.setSdcm3(ccdTestConfig.getSdcm3());
+			ccdTestConfigResponseList.add(ccdTestConfigResponseTemp);
+		}
+		// TODO Auto-generated method stub
+		return ccdTestConfigResponseList;
 	}
 
 	@Override
@@ -316,4 +349,17 @@ public class DataHandleServiceImpl implements DataHandleService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private CcdTestPlan GetCcdTestPlanByName(String planName) {
+		// fetch test data from database
+		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
+		CcdTestPlanExample.Criteria exampleCriteria = ccdTestPlanExample.createCriteria();
+		exampleCriteria.andPlanNameEqualTo(planName);
+		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
+		
+		// fetch threshold value from testplan.
+		CcdTestPlan ccdTestPlan = ccdTestPlanList.get(0);
+		return ccdTestPlan;
+	}
+	
 }
