@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.philips.pojo.AvgTestData;
+import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.User;
@@ -82,13 +83,13 @@ public class TestFileImport {
 //		ccdTestData.setX(0.4572763);
 //		ccdTestData.setY(0.3915107);
 		String planName = "999";
-		Integer step = 7;		
+		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig(planName);
 		ccdTestDataList = dataHandleService.GetAllTestData(planName);
 		Double maxBri = dataHandleService.GetMaxBri(ccdTestDataList);
 		effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName, ccdTestDataList, maxBri);
 		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
-		String xxx = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, step);
+		List<String> xxx = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
 		System.out.println(xxx);
 	}
 	

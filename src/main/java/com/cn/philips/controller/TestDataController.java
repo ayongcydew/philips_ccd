@@ -33,6 +33,7 @@ import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanNew;
+import com.cn.philips.pojo.CcdTestResault;
 import com.cn.philips.pojo.User;
 import com.cn.philips.pojo.UserCCD;
 import com.cn.philips.service.DataHandleService;
@@ -48,47 +49,34 @@ public class TestDataController {
 	@Resource
 	private DataHandleService dataHandleService;
 	
-	@RequestMapping(value="/getTestResault",method=RequestMethod.POST)
+	@RequestMapping(value="/getTestResault",method=RequestMethod.GET)
 	@ResponseBody
-	public List<String> testResault(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
+	public CcdTestResault  testResault(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
 		String planName = request.getParameter("planName");
-		JSONObject json = JSONObject.parseObject(requestBody);
+		// POST method will use the following part
+//		JSONObject json = JSONObject.parseObject(requestBody);
 	
-		if (planName == "") {
-			throw new Exception("Parameter Error");
-		}
-		ArrayList<CcdTestData> ccdTestDataList = dataHandleService.GetAllTestData(planName);
-		Double maxBri = dataHandleService.GetMaxBri(ccdTestDataList);
-		ArrayList<CcdTestData> effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName,ccdTestDataList, maxBri);
-		AvgTestData avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
-		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
+		if (planName == "") { throw new Exception("Parameter Error");}
 		
-		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig(planName);
-		
-		List<String> sdcmResaultList = new ArrayList<String>();
-		String resault1 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm1());
-		sdcmResaultList.add(resault1);
-		String resault2 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm2());
-		sdcmResaultList.add(resault2);
-		String resault3 = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig.getSdcm3());
-		sdcmResaultList.add(resault3);
-		
-		return sdcmResaultList;	
+		CcdTestResault ccdTestResault =  dataHandleService.GetTestResault(planName);
+	
+		return ccdTestResault;	
 	
 	}
 	
-	@RequestMapping(value="/getAvg",method=RequestMethod.GET)
-	@ResponseBody
-	public AvgTestData getAvgTestData(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
-	
-		String planName = request.getParameter("planName");
-		AvgTestData avgTestData = new AvgTestData();
-		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
-		ccdTestDataList = dataHandleService.GetAllTestData(planName);
-		avgTestData = dataHandleService.GetAvg(planName,ccdTestDataList);
-		return avgTestData;	
-	
-	}
+//	@RequestMapping(value="/getAvg",method=RequestMethod.GET)
+//	@ResponseBody
+//	public AvgTestData getAvgTestData(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
+//	
+//		String planName = request.getParameter("planName");
+//		if (planName == "") { throw new Exception("Parameter Error");}
+//		AvgTestData avgTestData = new AvgTestData();
+//		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
+//		ccdTestDataList = dataHandleService.GetAllTestData(planName);
+//		avgTestData = dataHandleService.GetAvg(planName,ccdTestDataList);
+//		return avgTestData;	
+//	
+//	}
 	
 	@RequestMapping(value="/getPlanNameList",method=RequestMethod.GET)
 	@ResponseBody
@@ -100,23 +88,11 @@ public class TestDataController {
 	
 	@RequestMapping(value="/getPlanList",method=RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<CcdTestPlanNew> getPlan(HttpServletRequest request,HttpServletResponse response){
+	public ArrayList<CcdTestPlanNew> getPlanList(HttpServletRequest request,HttpServletResponse response){
 		Integer start = Integer.parseInt(request.getParameter("start"));
 		Integer limit = Integer.parseInt(request.getParameter("limit"));
-		ArrayList<CcdTestPlan> ccdTestPlanList = dataHandleService.GetPlanList(start, limit);
-		ArrayList<CcdTestPlanNew> ccdTestPlanListNew = new ArrayList();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");   
-		for (CcdTestPlan ccdTestPlan : ccdTestPlanList) {
-			CcdTestPlanNew ccdTestPlanNew = new CcdTestPlanNew();
-			ccdTestPlanNew.setId(ccdTestPlan.getId());
-			ccdTestPlanNew.setPlanName(ccdTestPlan.getPlanName());
-			ccdTestPlanNew.setDescription(ccdTestPlan.getDescription());
-			ccdTestPlanNew.setPixelX(ccdTestPlan.getPixelX());
-			ccdTestPlanNew.setPixelY(ccdTestPlan.getPixelY());
-			ccdTestPlanNew.setOperatorName(ccdTestPlan.getOperatorName());
-			ccdTestPlanNew.setStartTime(sdf.format(ccdTestPlan.getStartTime()));
-			ccdTestPlanListNew.add(ccdTestPlanNew);
-		}
+		ArrayList<CcdTestPlanNew> ccdTestPlanListNew = dataHandleService.GetPlanList(start, limit);
+		
 		return ccdTestPlanListNew;	
 	
 	}

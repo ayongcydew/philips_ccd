@@ -37,12 +37,19 @@
 			<td class="ui_input_txt01">AvgV':</td>
 			<td class="ui_input_txt02">{{testresault.avgV}}</td>
 		</tr>
-								
-		<tr border="1" v-for="percentsdcm in percentsdcmlist">
-		<td class="ui_input_txt01">SDCM:</td>
-		<td class="ui_input_txt02">{{percentsdcm}}</td>
+		<tr>
+			<td class="ui_input_txt01">SDCM1:</td>
+			<td class="ui_input_txt02">{{testresault.sdcm1Resault}}</td>
 		</tr>
-	
+		<tr>
+			<td class="ui_input_txt01">SDCM2:</td>
+			<td class="ui_input_txt02">{{testresault.sdcm2Resault}}</td>
+		</tr>
+				<tr>
+			<td class="ui_input_txt01">SDCM3:</td>
+			<td class="ui_input_txt02">{{testresault.sdcm3Resault}}</td>
+		</tr>
+								
 	</table>
 </div>
 </body>
@@ -63,47 +70,20 @@
 		data : {
 			ddd: 'ddd',
 			localhost:'${pageContext.request.contextPath}',
-			firstTry: 'aaa',
-			maxl: '',
-			avgx: '',
-			avgy:'',
-			avgu: '',
-			avgv: '',
 			testresault:'',
 			planname:'' ,
-			threshold: 0.3,
-			bripath: '',
-			xpath: '',
-			ypath: '',
-			upath: '',
-			vpath: '',
-			sdcm1: 5,
-			sdcm2: 7,
-			sdcm3: 10,
-			percentsdcmlist: [],
-			options:[],
-			selectedplanname: ''
+
 		},
 		
 		created: function () {
 			
 			this.getparam(),
-			this.getpercentsdcm()
+			this.gettestresault()
 		
 		},
 		
 	    methods: {
-		    
-		    getplannamelist: function () {	
-		    	var url1=this.localhost + "/testManage/getPlanNameList"; 
-	            this.$http.get(url1).then(function(data){
-	              var json=JSON.parse(data.body);
-	              this.options=json;
-	            },function(response){
-	              console.info(response);
-	            })
-		    },
-		    
+		    		    
 		    getparam: function () {	
 	        	var query = location.search.substring(1);
 	        	var values= query.split("&");
@@ -116,19 +96,11 @@
 		        	}
 	        },
 		    
-		    getpercentsdcm: function () {
+		    gettestresault: function () {
 		    	var sdcmlist={};
 		    	var url1=this.localhost + "/testManage/getTestResault?planName="+ this.planname; 
-		    	var url4=this.localhost + "/testManage/getAvg?planName="+ this.planname; 
 
-	            this.$http.post(url1, sdcmlist).then(function(data){
-	              var json=data.body;
-	              this.percentsdcmlist= json;
-	            },function(response){
-	              console.info(response);
-	            })
-
-	            this.$http.get(url4).then(function(data){
+	            this.$http.get(url1).then(function(data){
 	              var json=data.body;
 	              this.testresault = json;
 	            },function(response){

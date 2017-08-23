@@ -10,6 +10,8 @@ import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
+import com.cn.philips.pojo.CcdTestPlanNew;
+import com.cn.philips.pojo.CcdTestResault;
 
 public interface DataHandleService {
 	
@@ -25,15 +27,17 @@ public interface DataHandleService {
 	
 	public Map<String, Double> CalculateEllipticVaule(AvgTestData avgTestData);
 	
-	public String CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList, Map<String, Double> gValueMap, Integer step);
+	public List<String> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList, Map<String, Double> gValueMap, CcdTestConfig ccdTestConfig);
 	
 	public ArrayList<String> GetPlanNameList();
 	
-	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit);
+	public ArrayList<CcdTestPlanNew> GetPlanList(Integer start, Integer limit);
 	
 	public CcdTestConfig GetCcdTestConfig(String planName);
 	
 	public List<CcdTestConfigResponse> GetCcdTestConfigList();
 	
 	public CcdTestData GetMaxDeltaValue(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList);
+	
+	public CcdTestResault GetTestResault(String planName) throws Exception;
 }

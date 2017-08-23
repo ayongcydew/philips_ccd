@@ -2,6 +2,7 @@ package com.cn.philips.service.impl;
 
 import java.util.List;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanExample;
+import com.cn.philips.pojo.CcdTestPlanNew;
+import com.cn.philips.pojo.CcdTestResault;
 import com.cn.philips.pojo.G11Matrix;
 import com.cn.philips.pojo.G11MatrixExample;
 import com.cn.philips.pojo.G12Matrix;
@@ -154,29 +157,39 @@ public class DataHandleServiceImpl implements DataHandleService {
 	}
 	
 	@Override
-	public String CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> effectiveCcdTestDataList,
-			Map<String, Double> gValueMap, Integer step) {
+	public List<String> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> effectiveCcdTestDataList,
+			Map<String, Double> gValueMap, CcdTestConfig ccdTestConfig) {
 		// TODO Auto-generated method stub
 		Double u = 0.000000;
 		Double v = 0.000000;
-		Integer count = 0;
-		for (CcdTestData ccdTestData : effectiveCcdTestDataList) {
-			u = ((ccdTestData.getX() - avgTestData.getAvgX()) * Math.cos(gValueMap.get("Q")))
-					+ ((ccdTestData.getY() - avgTestData.getAvgY()) * Math.sin(gValueMap.get("Q")));
-			v = ((ccdTestData.getX() - avgTestData.getAvgX()) * Math.sin(gValueMap.get("Q")))
-					- ((ccdTestData.getY() - avgTestData.getAvgY()) * Math.cos(gValueMap.get("Q")));
-			double distance = (u * u) / Math.pow((step * gValueMap.get("A")), 2) + (v * v) / Math.pow((step * gValueMap.get("B")), 2);
-			if (distance < 1) {
-				count++;
+
+		List<Integer> sdcmStepList = new ArrayList<Integer>();
+		sdcmStepList.add(ccdTestConfig.getSdcm1());
+		sdcmStepList.add(ccdTestConfig.getSdcm2());
+		sdcmStepList.add(ccdTestConfig.getSdcm3());
+		List<String> CalculatePixelResaultList = new ArrayList<String>();
+		for (Integer step : sdcmStepList) {
+			
+			Integer count = 0;
+			
+			for (CcdTestData ccdTestData : effectiveCcdTestDataList) {
+				u = ((ccdTestData.getX() - avgTestData.getAvgX()) * Math.cos(gValueMap.get("Q")))
+						+ ((ccdTestData.getY() - avgTestData.getAvgY()) * Math.sin(gValueMap.get("Q")));
+				v = ((ccdTestData.getX() - avgTestData.getAvgX()) * Math.sin(gValueMap.get("Q")))
+						- ((ccdTestData.getY() - avgTestData.getAvgY()) * Math.cos(gValueMap.get("Q")));
+				double distance = (u * u) / Math.pow((step * gValueMap.get("A")), 2) + (v * v) / Math.pow((step * gValueMap.get("B")), 2);
+				if (distance < 1) {
+					count++;
+				}
 			}
+						
+			double listSize = effectiveCcdTestDataList.size();
+			double listPercent = count.doubleValue()/listSize;
+			NumberFormat fmt = NumberFormat.getPercentInstance();
+			fmt.setMaximumFractionDigits(2);
+			CalculatePixelResaultList.add(fmt.format(listPercent));
 		}
-		
-		NumberFormat fmt = NumberFormat.getPercentInstance();
-		fmt.setMaximumFractionDigits(2);
-		double ccc = effectiveCcdTestDataList.size();
-		double bbb = count.doubleValue()/ccc;
-		String aaa = fmt.format(bbb);
-		return aaa;
+		return CalculatePixelResaultList;
 	}
 	
 	@Override
@@ -295,13 +308,28 @@ public class DataHandleServiceImpl implements DataHandleService {
 	}
 
 	@Override
-	public ArrayList<CcdTestPlan> GetPlanList(Integer start, Integer limit) {
+	public ArrayList<CcdTestPlanNew> GetPlanList(Integer start, Integer limit) {
 		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
 		CcdTestPlanExample.Criteria criteria = ccdTestPlanExample.createCriteria();
 		ccdTestPlanExample.setStart(start);
 		ccdTestPlanExample.setLimit(limit);
 		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
-		return ccdTestPlanList;
+		
+		//convert to final format
+		ArrayList<CcdTestPlanNew> ccdTestPlanListNew = new ArrayList();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");   
+		for (CcdTestPlan ccdTestPlan : ccdTestPlanList) {
+			CcdTestPlanNew ccdTestPlanNew = new CcdTestPlanNew();
+			ccdTestPlanNew.setId(ccdTestPlan.getId());
+			ccdTestPlanNew.setPlanName(ccdTestPlan.getPlanName());
+			ccdTestPlanNew.setDescription(ccdTestPlan.getDescription());
+			ccdTestPlanNew.setPixelX(ccdTestPlan.getPixelX());
+			ccdTestPlanNew.setPixelY(ccdTestPlan.getPixelY());
+			ccdTestPlanNew.setOperatorName(ccdTestPlan.getOperatorName());
+			ccdTestPlanNew.setStartTime(sdf.format(ccdTestPlan.getStartTime()));
+			ccdTestPlanListNew.add(ccdTestPlanNew);
+		}
+		return ccdTestPlanListNew;
 	}
 
 	@Override
@@ -312,10 +340,23 @@ public class DataHandleServiceImpl implements DataHandleService {
 		Integer planId = ccdTestPlan.getId();
 		
 		CcdTestConfig ccdTestConfig = new CcdTestConfig();
+		List<CcdTestConfig> ccdTestConfigList = new ArrayList<CcdTestConfig>();
 		CcdTestConfigExample ccdTestConfigExample = new CcdTestConfigExample();
 		CcdTestConfigExample.Criteria criteria1 = ccdTestConfigExample.createCriteria();
 		criteria1.andPlanidEqualTo(planId);
-		ccdTestConfig = ccdTestConfigMapper.selectByPrimaryKey(1);
+		ccdTestConfigList = ccdTestConfigMapper.selectByExample(ccdTestConfigExample);
+		if (ccdTestConfigList.size() !=0 ) {
+			ccdTestConfig = ccdTestConfigList.get(0);
+		} else {
+			
+			// the first one will be used as the default config
+			ccdTestConfig.setId(0);
+			ccdTestConfig.setPlanid(0);
+			ccdTestConfig.setSdcm1(3);
+			ccdTestConfig.setSdcm2(5);
+			ccdTestConfig.setSdcm3(7);
+			ccdTestConfig.setThreshold(0.3);
+		}
 		// TODO Auto-generated method stub
 		return ccdTestConfig;
 	}
@@ -325,7 +366,6 @@ public class DataHandleServiceImpl implements DataHandleService {
 		List<CcdTestConfig> ccdTestConfigList = new ArrayList<CcdTestConfig>();
 		CcdTestConfigExample ccdTestConfigExample = new CcdTestConfigExample();
 		CcdTestConfigExample.Criteria criteria = ccdTestConfigExample.createCriteria();
-		criteria.andIdIsNotNull();
 		ccdTestConfigList = ccdTestConfigMapper.selectByExample(ccdTestConfigExample);
 		List<CcdTestConfigResponse> ccdTestConfigResponseList = new ArrayList<CcdTestConfigResponse>();
 		for (CcdTestConfig ccdTestConfig : ccdTestConfigList) {
@@ -360,6 +400,33 @@ public class DataHandleServiceImpl implements DataHandleService {
 		// fetch threshold value from testplan.
 		CcdTestPlan ccdTestPlan = ccdTestPlanList.get(0);
 		return ccdTestPlan;
+	}
+
+	@Override
+	public CcdTestResault GetTestResault(String planName) throws Exception {
+		
+		ArrayList<CcdTestData> ccdTestDataList = GetAllTestData(planName);
+		Double maxBri = GetMaxBri(ccdTestDataList);
+		ArrayList<CcdTestData> effectiveTestDataList = GetEffectiveTestData(planName,ccdTestDataList, maxBri);
+		AvgTestData avgTestData = GetAvg(planName, ccdTestDataList);
+		Map<String, Double> ellipticMap = CalculateEllipticVaule(avgTestData);
+		
+		CcdTestConfig ccdTestConfig = GetCcdTestConfig(planName);
+		
+		List<String> sdcmResaultList = CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
+		
+		CcdTestResault ccdTestResault = new CcdTestResault();
+		ccdTestResault.setPlanName(planName);
+		ccdTestResault.setMaxBri(avgTestData.getMaxBri());
+		ccdTestResault.setAvgBri(avgTestData.getAvgBri());
+		ccdTestResault.setAvgX(avgTestData.getAvgX());
+		ccdTestResault.setAvgY(avgTestData.getAvgY());
+		ccdTestResault.setAvgU(avgTestData.getAvgU());
+		ccdTestResault.setAvgV(avgTestData.getAvgV());
+		ccdTestResault.setSdcm1Resault(sdcmResaultList.get(0));
+		ccdTestResault.setSdcm2Resault(sdcmResaultList.get(1));
+		ccdTestResault.setSdcm3Resault(sdcmResaultList.get(2));		
+		return ccdTestResault;
 	}
 	
 }
