@@ -82,7 +82,7 @@ public class TestFileImport {
 //		CcdTestData ccdTestData = new CcdTestData();
 //		ccdTestData.setX(0.4572763);
 //		ccdTestData.setY(0.3915107);
-		String planName = "999";
+		String planName = "testPlan";
 		CcdTestConfig ccdTestConfig = dataHandleService.GetCcdTestConfig(planName);
 		ccdTestDataList = dataHandleService.GetAllTestData(planName);
 		Double maxBri = dataHandleService.GetMaxBri(ccdTestDataList);
@@ -106,13 +106,28 @@ public class TestFileImport {
 		testtest.add(8);
 		testtest.add(9);
 		testtest.add(10);
-		List<Integer> test1 = testtest.subList(0, 1);
-		System.out.println("test");
+		List<Integer> test1 = testtest.subList(0, 5);
+		System.out.println(test1);
 	}
 	
 	@Test
 	public void test6() {
 		List<CcdTestConfigResponse> ccdTestConfigList = dataHandleService.GetCcdTestConfigList();
 		logger.info(JSON.toJSONString(ccdTestConfigList));
+	}
+	
+	@Test
+	public void testConvert() throws Exception {
+		
+		AvgTestData avgTestData = new AvgTestData();
+		ArrayList<CcdTestData>  ccdTestDataList = new ArrayList<CcdTestData>();
+		
+		String planName = "testPlan";
+		
+		ccdTestDataList = dataHandleService.GetAllTestData(planName);
+		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
+		CcdTestData[][] ccdTestDataArray = dataHandleService.convertCcdTesgDataListToArray(planName, ccdTestDataList);
+		
+		System.out.println(ccdTestDataArray);
 	}
 }

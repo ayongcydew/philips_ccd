@@ -429,4 +429,21 @@ public class DataHandleServiceImpl implements DataHandleService {
 		return ccdTestResault;
 	}
 	
+	@Override
+	public CcdTestData[][] convertCcdTesgDataListToArray(String planName, ArrayList<CcdTestData> ccdTestDataList) {
+		CcdTestPlan ccdTestPlan = GetCcdTestPlanByName(planName);
+		Integer lenX = ccdTestPlan.getPixelX();
+		Integer lenY = ccdTestPlan.getPixelY();
+		CcdTestData aaa = new CcdTestData();
+		CcdTestData[][] ccdTestDataArray = new CcdTestData[lenX][lenY];
+		for (int i = 0; i < lenX; i++) {
+			List<CcdTestData> tmpList =  ccdTestDataList.subList(i*lenY, (i+1)*lenY);
+			for (int j = 0; j < lenY; j++) {
+				ccdTestDataArray[i][j] = tmpList.get(j);
+			}
+		}
+		// TODO Auto-generated method stub
+		return ccdTestDataArray;
+	}
+	
 }

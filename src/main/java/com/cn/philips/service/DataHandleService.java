@@ -40,4 +40,6 @@ public interface DataHandleService {
 	public CcdTestData GetMaxDeltaValue(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList);
 	
 	public CcdTestResault GetTestResault(String planName) throws Exception;
+	
+	public CcdTestData[][] convertCcdTesgDataListToArray(String planName, ArrayList<CcdTestData> ccdTestDataList);
 }
