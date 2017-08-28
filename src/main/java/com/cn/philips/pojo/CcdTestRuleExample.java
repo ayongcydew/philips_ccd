@@ -3,14 +3,14 @@ package com.cn.philips.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RulesExample {
+public class CcdTestRuleExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public RulesExample() {
+    public CcdTestRuleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

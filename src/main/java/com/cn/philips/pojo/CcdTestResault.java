@@ -15,6 +15,10 @@ public class CcdTestResault {
     private Double avgU;
 
     private Double avgV;
+    
+    private Double avgDeltaUV;
+    
+    private Double maxDeltaUV;
 	
 	private String sdcm1Resault;
 	
@@ -76,6 +80,22 @@ public class CcdTestResault {
 
 	public void setAvgV(Double avgV) {
 		this.avgV = avgV;
+	}
+
+	public Double getAvgDeltaUV() {
+		return avgDeltaUV;
+	}
+
+	public void setAvgDeltaUV(Double avgDeltaUV) {
+		this.avgDeltaUV = avgDeltaUV;
+	}
+
+	public Double getMaxDeltaUV() {
+		return maxDeltaUV;
+	}
+
+	public void setMaxDeltaUV(Double maxDeltaUV) {
+		this.maxDeltaUV = maxDeltaUV;
 	}
 
 	public String getSdcm1Resault() {

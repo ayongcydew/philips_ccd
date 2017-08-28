@@ -37,6 +37,16 @@
 			<td class="ui_input_txt01">AvgV':</td>
 			<td class="ui_input_txt02">{{testresault.avgV}}</td>
 		</tr>
+		
+		<tr>
+			<td class="ui_input_txt01">Max∆U'V':</td>
+			<td class="ui_input_txt02">{{testresault.maxDeltaUV}}</td>
+		</tr>
+		<tr>
+			<td class="ui_input_txt01">Avg∆U'V'':</td>
+			<td class="ui_input_txt02">{{testresault.avgDeltaUV}}</td>
+		</tr>
+
 		<tr>
 			<td class="ui_input_txt01">SDCM1:</td>
 			<td class="ui_input_txt02">{{testresault.sdcm1Resault}}</td>

@@ -1,6 +1,6 @@
 package com.cn.philips.pojo;
 
-public class Rules {
+public class CcdTestRule {
     private Integer id;
 
     private Integer planid;

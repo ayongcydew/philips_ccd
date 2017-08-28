@@ -89,6 +89,9 @@ public class DataHandleServiceImpl implements DataHandleService {
 		Double sigmaWeightY = 0.0000000;
 		Double sigmaWeightU = 0.0000000;
 		Double sigmaWeightV = 0.0000000;
+		Double sigmaDeltauUV = 0.0000000;
+		Double deltauUV = 0.0000000;
+		Double maxDeltauUV = 0.0000000;
 		
 		for (CcdTestData effectiveCcdTestData : effectiveCCDtestDataList) {
 //			Double weightBri = effectiveCCDtestData.getBri();
@@ -105,6 +108,17 @@ public class DataHandleServiceImpl implements DataHandleService {
 		avgTestData.setAvgY(sigmaWeightY/sumWeightBri);
 		avgTestData.setAvgU(sigmaWeightU/sumWeightBri);
 		avgTestData.setAvgV(sigmaWeightV/sumWeightBri);
+		
+		
+		for (CcdTestData effectiveCcdTestData : effectiveCCDtestDataList) {
+			deltauUV = Math.sqrt(Math.pow((effectiveCcdTestData.getU() - avgTestData.getAvgU()), 2) 
+					+ Math.pow((effectiveCcdTestData.getV() - avgTestData.getAvgV()), 2));
+			if (deltauUV > maxDeltauUV) { maxDeltauUV = deltauUV;}
+			sigmaDeltauUV = sigmaDeltauUV + deltauUV;
+		}
+		
+		avgTestData.setAvgDeltaUV(sigmaDeltauUV/effectiveCCDtestDataList.size());
+		avgTestData.setMaxDeltaUV(maxDeltauUV);
 		
 		return avgTestData; 
 	}
@@ -390,7 +404,7 @@ public class DataHandleServiceImpl implements DataHandleService {
 		return null;
 	}
 	
-	private CcdTestPlan GetCcdTestPlanByName(String planName) {
+	public CcdTestPlan GetCcdTestPlanByName(String planName) {
 		// fetch test data from database
 		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
 		CcdTestPlanExample.Criteria exampleCriteria = ccdTestPlanExample.createCriteria();
@@ -423,6 +437,8 @@ public class DataHandleServiceImpl implements DataHandleService {
 		ccdTestResault.setAvgY(avgTestData.getAvgY());
 		ccdTestResault.setAvgU(avgTestData.getAvgU());
 		ccdTestResault.setAvgV(avgTestData.getAvgV());
+		ccdTestResault.setAvgDeltaUV(avgTestData.getAvgDeltaUV());
+		ccdTestResault.setMaxDeltaUV(avgTestData.getMaxDeltaUV());
 		ccdTestResault.setSdcm1Resault(sdcmResaultList.get(0));
 		ccdTestResault.setSdcm2Resault(sdcmResaultList.get(1));
 		ccdTestResault.setSdcm3Resault(sdcmResaultList.get(2));		

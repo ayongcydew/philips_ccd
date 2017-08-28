@@ -20,12 +20,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.philips.pojo.AvgTestData;
+import com.cn.philips.pojo.UniformityResponse;
 import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.User;
 import com.cn.philips.service.DataHandleService;
-import com.cn.philips.service.ImportTestDataService;;
+import com.cn.philips.service.ImportTestDataService;
+import com.cn.philips.service.RuleService;;
 
 @RunWith(SpringJUnit4ClassRunner.class)	
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
@@ -38,6 +40,9 @@ public class TestFileImport {
 	
 	@Resource
 	private DataHandleService dataHandleService;
+	
+	@Resource
+	private RuleService ruleService;
 	
 	@Test
 	public void importCcdTestData() throws Exception {
@@ -129,5 +134,12 @@ public class TestFileImport {
 		CcdTestData[][] ccdTestDataArray = dataHandleService.convertCcdTesgDataListToArray(planName, ccdTestDataList);
 		
 		System.out.println(ccdTestDataArray);
+	}
+	
+	@Test
+	public void testRules() throws Exception {
+		UniformityResponse response = ruleService.GetUniformity("testPlan");
+		System.out.println(response.getBriConditionAResault());
+		System.out.println(response.getBriConditionBResault());
 	}
 }

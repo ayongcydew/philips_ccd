@@ -16,6 +16,10 @@ public class AvgTestData {
     private Double avgU;
 
     private Double avgV;
+    
+    private Double avgDeltaUV;
+    
+    private Double maxDeltaUV;
 
     public Integer getId() {
         return id;
@@ -80,4 +84,21 @@ public class AvgTestData {
     public void setAvgV(Double avgV) {
         this.avgV = avgV;
     }
+
+	public Double getAvgDeltaUV() {
+		return avgDeltaUV;
+	}
+
+	public void setAvgDeltaUV(Double avgDeltaUV) {
+		this.avgDeltaUV = avgDeltaUV;
+	}
+
+	public Double getMaxDeltaUV() {
+		return maxDeltaUV;
+	}
+
+	public void setMaxDeltaUV(Double maxDeltaUV) {
+		this.maxDeltaUV = maxDeltaUV;
+	}
+    
 }
