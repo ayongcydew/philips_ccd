@@ -417,8 +417,13 @@ public class DataHandleServiceImpl implements DataHandleService {
 		ArrayList<CcdTestPlan> ccdTestPlanList = ccdTestPlanMapper.selectByExample(ccdTestPlanExample);
 		
 		// fetch threshold value from testplan.
-		CcdTestPlan ccdTestPlan = ccdTestPlanList.get(0);
-		return ccdTestPlan;
+		if (ccdTestPlanList.isEmpty()) { 
+			return null;
+		}
+		else {
+			CcdTestPlan ccdTestPlan = ccdTestPlanList.get(0);
+			return ccdTestPlan;
+		}
 	}
 
 	@Override

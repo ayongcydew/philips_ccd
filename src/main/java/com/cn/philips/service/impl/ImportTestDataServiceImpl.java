@@ -106,17 +106,17 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 		CcdTestPlan ccdTestPlan = dataHandleService.GetCcdTestPlanByName(planName);
 		if (ccdTestPlan == null) {
 			CcdTestPlan ccdTestPlan1 = new CcdTestPlan();
-			ccdTestPlan.setPlanName(planName);
-			ccdTestPlan.setDescription(description);
-			ccdTestPlan.setPixelX(i);
-			ccdTestPlan.setPixelY(j);
-			ccdTestPlan.setStartTime(startTime);
-			ccdTestPlan.setOperatorName(operatorName);
-			this.ccdTestPlanMapper.insert(ccdTestPlan);
-			
-			CcdTestRule ccdTestRule = new CcdTestRule();
+			ccdTestPlan1.setPlanName(planName);
+			ccdTestPlan1.setDescription(description);
+			ccdTestPlan1.setPixelX(i);
+			ccdTestPlan1.setPixelY(j);
+			ccdTestPlan1.setStartTime(startTime);
+			ccdTestPlan1.setOperatorName(operatorName);
+			this.ccdTestPlanMapper.insert(ccdTestPlan1);		
 			CcdTestPlan ccdTestPlan2 = dataHandleService.GetCcdTestPlanByName(planName);
-			ccdTestRule.setPlanid(ccdTestPlan1.getId());
+						
+			CcdTestRule ccdTestRule = new CcdTestRule();
+			ccdTestRule.setPlanid(ccdTestPlan2.getId());
 			this.ccdTestRuleMapper.insert(ccdTestRule);
 			
 			for (CcdTestData testDataDetail : testDataDetailList) {
