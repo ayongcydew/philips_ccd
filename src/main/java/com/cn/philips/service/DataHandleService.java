@@ -27,7 +27,7 @@ public interface DataHandleService {
 	
 	public Map<String, Double> CalculateEllipticVaule(AvgTestData avgTestData);
 	
-	public List<String> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList, Map<String, Double> gValueMap, CcdTestConfig ccdTestConfig);
+	public List<Double> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> ccdTestDataList, Map<String, Double> gValueMap, CcdTestConfig ccdTestConfig);
 	
 	public ArrayList<String> GetPlanNameList();
 	
@@ -42,6 +42,8 @@ public interface DataHandleService {
 	public CcdTestResault GetTestResault(String planName) throws Exception;
 	
 	public CcdTestPlan GetCcdTestPlanByName(String planName);
+	
+	public CcdTestPlan GetCcdTestPlanById(Integer planId);
 	
 	public CcdTestData[][] convertCcdTesgDataListToArray(String planName, ArrayList<CcdTestData> ccdTestDataList);
 }

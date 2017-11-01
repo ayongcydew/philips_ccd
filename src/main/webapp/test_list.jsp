@@ -167,7 +167,7 @@ function init() {
 		    },
 		    
             opendetailwindow: function (planname) {
-            	window.open ('test_detail_new.jsp?PlanName='+planname, 'newwindow', 
+            	window.open ('test_detail.jsp?PlanName='+planname, 'newwindow', 
             			'height=600, width=500, top=200,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
             },
 		}		

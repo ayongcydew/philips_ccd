@@ -34,10 +34,14 @@ import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanNew;
 import com.cn.philips.pojo.CcdTestResault;
+import com.cn.philips.pojo.CcdTestRule;
+import com.cn.philips.pojo.CcdTestRuleResponse;
+import com.cn.philips.pojo.UniformityResponse;
 import com.cn.philips.pojo.User;
 import com.cn.philips.pojo.UserCCD;
 import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.IUserService;
+import com.cn.philips.service.RuleService;
 import com.cn.philips.service.UserCCDService;
 
 @Controller
@@ -48,6 +52,9 @@ public class TestDataController {
 	
 	@Resource
 	private DataHandleService dataHandleService;
+	
+	@Resource
+	private RuleService ruleService;
 	
 	@RequestMapping(value="/getTestResault",method=RequestMethod.GET)
 	@ResponseBody
@@ -110,6 +117,41 @@ public class TestDataController {
 	public void testTest(HttpServletRequest request,HttpServletResponse response, @RequestBody User user){
 		System.out.print("testtest");
 		user.getAge();
+	
+	}
+	
+	@RequestMapping(value="/getTestRuleList",method=RequestMethod.GET)
+	@ResponseBody
+	public List<CcdTestRuleResponse> getTestRule(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		List<CcdTestRule> ccdTestRuleList = ruleService.GetCcdTestRuleList();
+		List<CcdTestRuleResponse> ccdTestRuleReponseList = new ArrayList<CcdTestRuleResponse>();
+		for (CcdTestRule ccdTestRule: ccdTestRuleList) {
+			CcdTestRuleResponse ccdTestRuleResponse = new CcdTestRuleResponse();
+			ccdTestRuleResponse.setId(ccdTestRule.getId());
+			ccdTestRuleResponse.setPlanname(dataHandleService.GetCcdTestPlanById(ccdTestRule.getPlanid()).getPlanName());
+			ccdTestRuleResponse.setPlanid(ccdTestRule.getPlanid());
+			ccdTestRuleResponse.setIsbriactivated(ccdTestRule.getIsbriactivated());
+			ccdTestRuleResponse.setBriconditiona(ccdTestRule.getBriconditiona());
+			ccdTestRuleResponse.setBriconditionb(ccdTestRule.getBriconditionb());
+			ccdTestRuleResponse.setIscoloractivated(ccdTestRule.getIscoloractivated());
+			ccdTestRuleResponse.setColorconditiona(ccdTestRule.getColorconditiona());
+			ccdTestRuleResponse.setColorconditionb(ccdTestRule.getColorconditionb());
+			ccdTestRuleResponse.setId(ccdTestRule.getId());
+			ccdTestRuleReponseList.add(ccdTestRuleResponse);
+		}
+		return ccdTestRuleReponseList;
+	}
+	
+	@RequestMapping(value="/getRuleResault",method=RequestMethod.GET)
+	@ResponseBody
+	public UniformityResponse  ruleTestResault(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
+		String planName = request.getParameter("planName");
+	
+		if (planName == "") { throw new Exception("Parameter Error");}
+		
+		UniformityResponse uniformityResponse =  ruleService.GetUniformity(planName);
+	
+		return uniformityResponse;	
 	
 	}
 }

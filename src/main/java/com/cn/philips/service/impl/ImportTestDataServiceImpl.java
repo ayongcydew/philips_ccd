@@ -22,11 +22,14 @@ import org.springframework.stereotype.Service;
 
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.CcdTestPlanMapper;
+import com.cn.philips.dao.CcdTestRuleMapper;
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.UserCCDMapper;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
+import com.cn.philips.pojo.CcdTestRule;
+import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.ImportTestDataService;
 
 
@@ -38,6 +41,12 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 	
 	@Resource
 	private CcdTestPlanMapper ccdTestPlanMapper;
+	
+	@Resource
+	private CcdTestRuleMapper ccdTestRuleMapper;
+	
+	@Resource
+	private DataHandleService dataHandleService;
 	
 	@Override
 	public void InsertTestData(String planName, String description, Date startTime, String operatorName, String briPath, 
@@ -93,18 +102,33 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 		}
 		
 		// TODO Auto-generated method stub
-		CcdTestPlan ccdTestPlan = new CcdTestPlan();
-		ccdTestPlan.setPlanName(planName);
-		ccdTestPlan.setDescription(description);
-		ccdTestPlan.setPixelX(i);
-		ccdTestPlan.setPixelY(j);
-		ccdTestPlan.setStartTime(startTime);
-		ccdTestPlan.setOperatorName(operatorName);
-		this.ccdTestPlanMapper.insert(ccdTestPlan);
 		
-		for (CcdTestData testDataDetail : testDataDetailList) {
-			this.ccdTestDataMapper.insert(testDataDetail);
+		CcdTestPlan ccdTestPlan = dataHandleService.GetCcdTestPlanByName(planName);
+		if (ccdTestPlan == null) {
+			CcdTestPlan ccdTestPlan1 = new CcdTestPlan();
+			ccdTestPlan.setPlanName(planName);
+			ccdTestPlan.setDescription(description);
+			ccdTestPlan.setPixelX(i);
+			ccdTestPlan.setPixelY(j);
+			ccdTestPlan.setStartTime(startTime);
+			ccdTestPlan.setOperatorName(operatorName);
+			this.ccdTestPlanMapper.insert(ccdTestPlan);
+			
+			CcdTestRule ccdTestRule = new CcdTestRule();
+			CcdTestPlan ccdTestPlan2 = dataHandleService.GetCcdTestPlanByName(planName);
+			ccdTestRule.setPlanid(ccdTestPlan1.getId());
+			this.ccdTestRuleMapper.insert(ccdTestRule);
+			
+			for (CcdTestData testDataDetail : testDataDetailList) {
+				this.ccdTestDataMapper.insert(testDataDetail);
+			}
+			
+		} else {
+			System.out.println("planName exist");
+//			throw new Exception("planName exist");
 		}
+		
+
 	}
 	
 	private ArrayList<ArrayList<Double>>  ImportFromTxtFile(String txtFilePath) {

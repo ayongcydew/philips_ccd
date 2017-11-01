@@ -20,11 +20,11 @@ public class CcdTestResault {
     
     private Double maxDeltaUV;
 	
-	private String sdcm1Resault;
+	private Double sdcm1Resault;
 	
-	private String sdcm2Resault;
+	private Double sdcm2Resault;
 	
-	private String sdcm3Resault;
+	private Double sdcm3Resault;
 
 	public String getPlanName() {
 		return planName;
@@ -98,28 +98,27 @@ public class CcdTestResault {
 		this.maxDeltaUV = maxDeltaUV;
 	}
 
-	public String getSdcm1Resault() {
+	public Double getSdcm1Resault() {
 		return sdcm1Resault;
 	}
 
-	public void setSdcm1Resault(String sdcm1Resault) {
+	public void setSdcm1Resault(Double sdcm1Resault) {
 		this.sdcm1Resault = sdcm1Resault;
 	}
 
-	public String getSdcm2Resault() {
+	public Double getSdcm2Resault() {
 		return sdcm2Resault;
 	}
 
-	public void setSdcm2Resault(String sdcm2Resault) {
+	public void setSdcm2Resault(Double sdcm2Resault) {
 		this.sdcm2Resault = sdcm2Resault;
 	}
 
-	public String getSdcm3Resault() {
+	public Double getSdcm3Resault() {
 		return sdcm3Resault;
 	}
 
-	public void setSdcm3Resault(String sdcm3Resault) {
+	public void setSdcm3Resault(Double sdcm3Resault) {
 		this.sdcm3Resault = sdcm3Resault;
 	}
-	
 }

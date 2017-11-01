@@ -19,6 +19,10 @@
 		</tr>
 		<tr>
 			<td class="ui_input_txt01">MaxL:</td>
+			<td class="ui_input_txt02">{{testresault.maxBri}}</td>
+		</tr>
+		<tr>
+			<td class="ui_input_txt01">AvgL:</td>
 			<td class="ui_input_txt02">{{testresault.avgBri}}</td>
 		</tr>
 		<tr>
@@ -49,15 +53,15 @@
 
 		<tr>
 			<td class="ui_input_txt01">SDCM1:</td>
-			<td class="ui_input_txt02">{{testresault.sdcm1Resault}}</td>
+			<td class="ui_input_txt02">{{toPercent(testresault.sdcm1Resault)}}</td>
 		</tr>
 		<tr>
 			<td class="ui_input_txt01">SDCM2:</td>
-			<td class="ui_input_txt02">{{testresault.sdcm2Resault}}</td>
+			<td class="ui_input_txt02">{{toPercent(testresault.sdcm2Resault)}}</td>
 		</tr>
 				<tr>
 			<td class="ui_input_txt01">SDCM3:</td>
-			<td class="ui_input_txt02">{{testresault.sdcm3Resault}}</td>
+			<td class="ui_input_txt02">{{toPercent(testresault.sdcm3Resault)}}</td>
 		</tr>
 								
 	</table>
@@ -82,6 +86,7 @@
 			localhost:'${pageContext.request.contextPath}',
 			testresault:'',
 			planname:'' ,
+			point:''
 
 		},
 		
@@ -116,7 +121,14 @@
 	            },function(response){
 	              console.info(response);
 	            })
-	         }
+	         },
+	         
+	         //change value to percentage format
+	         toPercent: function (point){
+	        	  var str=Number(point*100).toFixed(2);
+	        	  str+="%";
+	        	    return str;
+	        }	
 		}		
 	})
 </script>

@@ -30,9 +30,19 @@
 				</tr>
 			</table>
 		</div>
+		<div id="box_bottom">
+			<a href="javascript:openImportWin();" >添加配置</a>
+		</div>
 </div>
 </body>
 </html>
+
+<script language="javascript">
+
+function openImportWin(){
+	window.open ('test_import.jsp', 'newwindow', 'height=600, width=500, top=200,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+}
+</script>
 
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>

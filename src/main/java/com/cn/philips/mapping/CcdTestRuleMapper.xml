@@ -8,8 +8,8 @@
     <result column="briConditionA" property="briconditiona" jdbcType="INTEGER" />
     <result column="briConditionB" property="briconditionb" jdbcType="INTEGER" />
     <result column="isColorActivated" property="iscoloractivated" jdbcType="INTEGER" />
-    <result column="colorConditionA" property="colorconditiona" jdbcType="INTEGER" />
-    <result column="colorConditionB" property="colorconditionb" jdbcType="INTEGER" />
+    <result column="colorConditionA" property="colorconditiona" jdbcType="DOUBLE" />
+    <result column="colorConditionB" property="colorconditionb" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -110,7 +110,7 @@
       colorConditionA, colorConditionB)
     values (#{id,jdbcType=INTEGER}, #{planid,jdbcType=INTEGER}, #{isbriactivated,jdbcType=INTEGER}, 
       #{briconditiona,jdbcType=INTEGER}, #{briconditionb,jdbcType=INTEGER}, #{iscoloractivated,jdbcType=INTEGER}, 
-      #{colorconditiona,jdbcType=INTEGER}, #{colorconditionb,jdbcType=INTEGER})
+      #{colorconditiona,jdbcType=DOUBLE}, #{colorconditionb,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.philips.pojo.CcdTestRule" >
     insert into ccd_test_rule
@@ -160,10 +160,10 @@
         #{iscoloractivated,jdbcType=INTEGER},
       </if>
       <if test="colorconditiona != null" >
-        #{colorconditiona,jdbcType=INTEGER},
+        #{colorconditiona,jdbcType=DOUBLE},
       </if>
       <if test="colorconditionb != null" >
-        #{colorconditionb,jdbcType=INTEGER},
+        #{colorconditionb,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -195,10 +195,10 @@
         isColorActivated = #{record.iscoloractivated,jdbcType=INTEGER},
       </if>
       <if test="record.colorconditiona != null" >
-        colorConditionA = #{record.colorconditiona,jdbcType=INTEGER},
+        colorConditionA = #{record.colorconditiona,jdbcType=DOUBLE},
       </if>
       <if test="record.colorconditionb != null" >
-        colorConditionB = #{record.colorconditionb,jdbcType=INTEGER},
+        colorConditionB = #{record.colorconditionb,jdbcType=DOUBLE},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -213,8 +213,8 @@
       briConditionA = #{record.briconditiona,jdbcType=INTEGER},
       briConditionB = #{record.briconditionb,jdbcType=INTEGER},
       isColorActivated = #{record.iscoloractivated,jdbcType=INTEGER},
-      colorConditionA = #{record.colorconditiona,jdbcType=INTEGER},
-      colorConditionB = #{record.colorconditionb,jdbcType=INTEGER}
+      colorConditionA = #{record.colorconditiona,jdbcType=DOUBLE},
+      colorConditionB = #{record.colorconditionb,jdbcType=DOUBLE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -238,10 +238,10 @@
         isColorActivated = #{iscoloractivated,jdbcType=INTEGER},
       </if>
       <if test="colorconditiona != null" >
-        colorConditionA = #{colorconditiona,jdbcType=INTEGER},
+        colorConditionA = #{colorconditiona,jdbcType=DOUBLE},
       </if>
       <if test="colorconditionb != null" >
-        colorConditionB = #{colorconditionb,jdbcType=INTEGER},
+        colorConditionB = #{colorconditionb,jdbcType=DOUBLE},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -253,8 +253,8 @@
       briConditionA = #{briconditiona,jdbcType=INTEGER},
       briConditionB = #{briconditionb,jdbcType=INTEGER},
       isColorActivated = #{iscoloractivated,jdbcType=INTEGER},
-      colorConditionA = #{colorconditiona,jdbcType=INTEGER},
-      colorConditionB = #{colorconditionb,jdbcType=INTEGER}
+      colorConditionA = #{colorconditiona,jdbcType=DOUBLE},
+      colorConditionB = #{colorconditionb,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -89,14 +89,14 @@ public class DataHandleServiceImpl implements DataHandleService {
 		Double sigmaWeightY = 0.0000000;
 		Double sigmaWeightU = 0.0000000;
 		Double sigmaWeightV = 0.0000000;
-		Double sigmaDeltauUV = 0.0000000;
-		Double deltauUV = 0.0000000;
-		Double maxDeltauUV = 0.0000000;
+		Double sigmaDeltaUV = 0.0000000;
+		Double deltaUV = 0.0000000;
+		Double maxDeltaUV = 0.0000000;
 		
 		for (CcdTestData effectiveCcdTestData : effectiveCCDtestDataList) {
 //			Double weightBri = effectiveCCDtestData.getBri();
 			sumWeightBri = sumWeightBri + effectiveCcdTestData.getBri();
-			sigmaWeightBri = sigmaWeightBri + effectiveCcdTestData.getBri()*  effectiveCcdTestData.getBri();
+			sigmaWeightBri = sigmaWeightBri + effectiveCcdTestData.getBri() * effectiveCcdTestData.getBri();
 			sigmaWeightX = sigmaWeightX + effectiveCcdTestData.getX() * effectiveCcdTestData.getBri();
 			sigmaWeightY = sigmaWeightY + effectiveCcdTestData.getY() * effectiveCcdTestData.getBri();
 			sigmaWeightU = sigmaWeightU + effectiveCcdTestData.getU() * effectiveCcdTestData.getBri();
@@ -111,14 +111,14 @@ public class DataHandleServiceImpl implements DataHandleService {
 		
 		
 		for (CcdTestData effectiveCcdTestData : effectiveCCDtestDataList) {
-			deltauUV = Math.sqrt(Math.pow((effectiveCcdTestData.getU() - avgTestData.getAvgU()), 2) 
+			deltaUV = Math.sqrt(Math.pow((effectiveCcdTestData.getU() - avgTestData.getAvgU()), 2) 
 					+ Math.pow((effectiveCcdTestData.getV() - avgTestData.getAvgV()), 2));
-			if (deltauUV > maxDeltauUV) { maxDeltauUV = deltauUV;}
-			sigmaDeltauUV = sigmaDeltauUV + deltauUV;
+			if (deltaUV > maxDeltaUV) { maxDeltaUV = deltaUV;}
+			sigmaDeltaUV = sigmaDeltaUV + deltaUV;
 		}
 		
-		avgTestData.setAvgDeltaUV(sigmaDeltauUV/effectiveCCDtestDataList.size());
-		avgTestData.setMaxDeltaUV(maxDeltauUV);
+		avgTestData.setAvgDeltaUV(sigmaDeltaUV/effectiveCCDtestDataList.size());
+		avgTestData.setMaxDeltaUV(maxDeltaUV);
 		
 		return avgTestData; 
 	}
@@ -132,11 +132,11 @@ public class DataHandleServiceImpl implements DataHandleService {
 		Double g12 = CalculateGVaule("G12", avgTestData);
 		Double g22 = CalculateGVaule("G22", avgTestData);
 		
-		if (g12 < (Math.sqrt(g11 * g22) * -1)) {
-			g12 = (Math.sqrt(g11 * g22) * -1);
+		if (g12 < (Math.sqrt(g11 * g22) * -0.995)) {
+			g12 = (Math.sqrt(g11 * g22) * -0.995);
 		}
-		if (g12 > Math.sqrt(g11 * g22)) {
-			g12 = Math.sqrt(g11 * g22);
+		if (g12 > Math.sqrt(g11 * g22) * 0.995) {
+			g12 = Math.sqrt(g11 * g22) * 0.995;
 		}
 
 		if (g12 == 0.0) {
@@ -171,7 +171,7 @@ public class DataHandleServiceImpl implements DataHandleService {
 	}
 	
 	@Override
-	public List<String> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> effectiveCcdTestDataList,
+	public List<Double> CalculatePixelPointRang(AvgTestData avgTestData, ArrayList<CcdTestData> effectiveCcdTestDataList,
 			Map<String, Double> gValueMap, CcdTestConfig ccdTestConfig) {
 		// TODO Auto-generated method stub
 		Double u = 0.000000;
@@ -181,7 +181,7 @@ public class DataHandleServiceImpl implements DataHandleService {
 		sdcmStepList.add(ccdTestConfig.getSdcm1());
 		sdcmStepList.add(ccdTestConfig.getSdcm2());
 		sdcmStepList.add(ccdTestConfig.getSdcm3());
-		List<String> CalculatePixelResaultList = new ArrayList<String>();
+		List<Double> CalculatePixelResaultList = new ArrayList<Double>();
 		for (Integer step : sdcmStepList) {
 			
 			Integer count = 0;
@@ -198,10 +198,11 @@ public class DataHandleServiceImpl implements DataHandleService {
 			}
 						
 			double listSize = effectiveCcdTestDataList.size();
-			double listPercent = count.doubleValue()/listSize;
-			NumberFormat fmt = NumberFormat.getPercentInstance();
-			fmt.setMaximumFractionDigits(2);
-			CalculatePixelResaultList.add(fmt.format(listPercent));
+			double listPercent = Double.valueOf(count.doubleValue())/listSize;
+//			NumberFormat fmt = NumberFormat.getPercentInstance();
+//			fmt.setMaximumFractionDigits(2);
+//			CalculatePixelResaultList.add(fmt.format(listPercent));
+			CalculatePixelResaultList.add(listPercent);
 		}
 		return CalculatePixelResaultList;
 	}
@@ -260,10 +261,13 @@ public class DataHandleServiceImpl implements DataHandleService {
 	public Double GetMaxBri(ArrayList<CcdTestData> ccdTestDataList) {
 		// TODO Auto-generated method stub
 		ArrayList<Double> briList = new ArrayList();
+		Double maxValue = 0.00000;
 		for (CcdTestData ccdtestData : ccdTestDataList) {
-			briList.add(ccdtestData.getBri());
+			if (maxValue < ccdtestData.getBri()) {
+				maxValue = ccdtestData.getBri();
+			}
 		}
-		return Collections.max(briList);
+		return maxValue;
 	}
 
 	
@@ -404,6 +408,7 @@ public class DataHandleServiceImpl implements DataHandleService {
 		return null;
 	}
 	
+	@Override
 	public CcdTestPlan GetCcdTestPlanByName(String planName) {
 		// fetch test data from database
 		CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
@@ -417,6 +422,14 @@ public class DataHandleServiceImpl implements DataHandleService {
 	}
 
 	@Override
+	public CcdTestPlan GetCcdTestPlanById(Integer planId) {
+		// fetch test data from database
+		CcdTestPlan ccdTestPlan = ccdTestPlanMapper.selectByPrimaryKey(planId);
+		return ccdTestPlan;
+	}
+
+	
+	@Override
 	public CcdTestResault GetTestResault(String planName) throws Exception {
 		
 		ArrayList<CcdTestData> ccdTestDataList = GetAllTestData(planName);
@@ -427,11 +440,11 @@ public class DataHandleServiceImpl implements DataHandleService {
 		
 		CcdTestConfig ccdTestConfig = GetCcdTestConfig(planName);
 		
-		List<String> sdcmResaultList = CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
+		List<Double> sdcmResaultList = CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
 		
 		CcdTestResault ccdTestResault = new CcdTestResault();
 		ccdTestResault.setPlanName(planName);
-		ccdTestResault.setMaxBri(avgTestData.getMaxBri());
+		ccdTestResault.setMaxBri(maxBri);
 		ccdTestResault.setAvgBri(avgTestData.getAvgBri());
 		ccdTestResault.setAvgX(avgTestData.getAvgX());
 		ccdTestResault.setAvgY(avgTestData.getAvgY());

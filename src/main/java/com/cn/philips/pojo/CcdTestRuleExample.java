@@ -474,52 +474,52 @@ public class CcdTestRuleExample {
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaEqualTo(Integer value) {
+        public Criteria andColorconditionaEqualTo(Double value) {
             addCriterion("colorConditionA =", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaNotEqualTo(Integer value) {
+        public Criteria andColorconditionaNotEqualTo(Double value) {
             addCriterion("colorConditionA <>", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaGreaterThan(Integer value) {
+        public Criteria andColorconditionaGreaterThan(Double value) {
             addCriterion("colorConditionA >", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaGreaterThanOrEqualTo(Integer value) {
+        public Criteria andColorconditionaGreaterThanOrEqualTo(Double value) {
             addCriterion("colorConditionA >=", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaLessThan(Integer value) {
+        public Criteria andColorconditionaLessThan(Double value) {
             addCriterion("colorConditionA <", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaLessThanOrEqualTo(Integer value) {
+        public Criteria andColorconditionaLessThanOrEqualTo(Double value) {
             addCriterion("colorConditionA <=", value, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaIn(List<Integer> values) {
+        public Criteria andColorconditionaIn(List<Double> values) {
             addCriterion("colorConditionA in", values, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaNotIn(List<Integer> values) {
+        public Criteria andColorconditionaNotIn(List<Double> values) {
             addCriterion("colorConditionA not in", values, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaBetween(Integer value1, Integer value2) {
+        public Criteria andColorconditionaBetween(Double value1, Double value2) {
             addCriterion("colorConditionA between", value1, value2, "colorconditiona");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionaNotBetween(Integer value1, Integer value2) {
+        public Criteria andColorconditionaNotBetween(Double value1, Double value2) {
             addCriterion("colorConditionA not between", value1, value2, "colorconditiona");
             return (Criteria) this;
         }
@@ -534,52 +534,52 @@ public class CcdTestRuleExample {
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbEqualTo(Integer value) {
+        public Criteria andColorconditionbEqualTo(Double value) {
             addCriterion("colorConditionB =", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbNotEqualTo(Integer value) {
+        public Criteria andColorconditionbNotEqualTo(Double value) {
             addCriterion("colorConditionB <>", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbGreaterThan(Integer value) {
+        public Criteria andColorconditionbGreaterThan(Double value) {
             addCriterion("colorConditionB >", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbGreaterThanOrEqualTo(Integer value) {
+        public Criteria andColorconditionbGreaterThanOrEqualTo(Double value) {
             addCriterion("colorConditionB >=", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbLessThan(Integer value) {
+        public Criteria andColorconditionbLessThan(Double value) {
             addCriterion("colorConditionB <", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbLessThanOrEqualTo(Integer value) {
+        public Criteria andColorconditionbLessThanOrEqualTo(Double value) {
             addCriterion("colorConditionB <=", value, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbIn(List<Integer> values) {
+        public Criteria andColorconditionbIn(List<Double> values) {
             addCriterion("colorConditionB in", values, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbNotIn(List<Integer> values) {
+        public Criteria andColorconditionbNotIn(List<Double> values) {
             addCriterion("colorConditionB not in", values, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbBetween(Integer value1, Integer value2) {
+        public Criteria andColorconditionbBetween(Double value1, Double value2) {
             addCriterion("colorConditionB between", value1, value2, "colorconditionb");
             return (Criteria) this;
         }
 
-        public Criteria andColorconditionbNotBetween(Integer value1, Integer value2) {
+        public Criteria andColorconditionbNotBetween(Double value1, Double value2) {
             addCriterion("colorConditionB not between", value1, value2, "colorconditionb");
             return (Criteria) this;
         }

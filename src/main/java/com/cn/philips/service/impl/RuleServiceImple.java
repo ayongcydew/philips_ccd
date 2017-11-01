@@ -45,27 +45,91 @@ public class RuleServiceImple implements RuleService {
 		CcdTestRule rule = ruleList.get(0);
 		Integer overFlowBriConditionA = 0;
 		Integer overFlowBriConditionB = 0;
+		Integer overFlowColorConditionA = 0;
+		Integer overFlowColorConditionB = 0;
 
+		UniformityResponse UniformityResponse = new UniformityResponse();
+		UniformityResponse.setPlanName(ccdTestPlan.getPlanName());
+		
 		if (rule.getIsbriactivated() == 1) {
+			
+			//for row
+			for (int i = 0; i < ccdTestPlan.getPixelX(); i++) {
+				for (int j = 1; j < ccdTestPlan.getPixelX(); j++) {
+
+					if (!effectiveTestDataList.contains(ccdTestDataArray[i][j]) ||
+							!effectiveTestDataList.contains(ccdTestDataArray[i][j-1])) {						
+						continue;
+					}
+					
+					Double deltaBri = Math.abs(ccdTestDataArray[i][j].getBri() - ccdTestDataArray[i][j-1].getBri());
+					
+					if (deltaBri > rule.getBriconditiona()) {
+						overFlowBriConditionA++;
+					} else if (deltaBri > rule.getBriconditionb()) {
+						overFlowBriConditionB++;
+					}
+				}
+			}
+			
+			//for line
+			for (int j = 0; j < ccdTestPlan.getPixelX(); j++) {
+				for (int i = 1; i < ccdTestPlan.getPixelX(); i++) {
+
+					if (!effectiveTestDataList.contains(ccdTestDataArray[j][i]) ||
+							!effectiveTestDataList.contains(ccdTestDataArray[j][i-1])) {						
+						continue;
+					}
+					
+					Double deltaBri = Math.abs(ccdTestDataArray[j][i].getBri() - ccdTestDataArray[j][i-1].getBri());
+					
+					if (deltaBri > rule.getBriconditiona()) {
+						overFlowBriConditionA++;
+					} else if (deltaBri > rule.getBriconditionb()) {
+						overFlowBriConditionB++;
+					}
+				}
+			}
+						
+			UniformityResponse.setBriConditionAResault(1.0 - Double.valueOf(0.5 * overFlowBriConditionA)/effectiveTestDataList.size());
+			UniformityResponse.setBriConditionBResault(1.0 - Double.valueOf(0.5 * overFlowBriConditionB)/effectiveTestDataList.size());
+		}
+		if (rule.getIscoloractivated() == 1) {
+			
 			for (int i = 0; i < ccdTestPlan.getPixelX(); i++) {
 				for (int j = 0; j < ccdTestPlan.getPixelX(); j++) {
 
 					if (!effectiveTestDataList.contains(ccdTestDataArray[i][j])) {
 						continue;
 					}
-					if (Math.abs(ccdTestDataArray[i][j].getBri() - avgTestData.getAvgBri()) > rule.getBriconditiona()) {
-						overFlowBriConditionA++;
-					} else if (Math.abs(ccdTestDataArray[i][j].getBri() - avgTestData.getAvgBri()) > rule.getBriconditionb()) {
-						overFlowBriConditionB++;
+										
+					Double deltaUV = Math.sqrt(Math.pow((ccdTestDataArray[i][j].getU() - avgTestData.getAvgU()), 2) 
+							+ Math.pow((ccdTestDataArray[i][j].getV() - avgTestData.getAvgV()), 2));
+//					
+//					if (Math.abs(deltaUV - avgTestData.getAvgDeltaUV()) > rule.getColorconditiona()) {
+//						overFlowColorConditionA++;
+//					} else if (Math.abs(deltaUV - avgTestData.getAvgDeltaUV()) > rule.getColorconditionb()) {
+//						overFlowColorConditionB++;
+//					}
+								
+					if (deltaUV > rule.getColorconditiona()) {
+						overFlowColorConditionA++;
+					} else if (deltaUV > rule.getColorconditionb()) {
+						overFlowColorConditionB++;
 					}
 				}
 			}
+			UniformityResponse.setColorConditionAResault(1.0 - Double.valueOf(overFlowColorConditionA)/effectiveTestDataList.size());
+			UniformityResponse.setColorConditionBResault(1.0 - Double.valueOf(overFlowColorConditionB)/effectiveTestDataList.size());
 		}
-		UniformityResponse brightnessUniformityResponse = new UniformityResponse();
-		brightnessUniformityResponse.setPlanName(ccdTestPlan.getPlanName());
-		brightnessUniformityResponse.setBriConditionAResault(1.0 - Double.valueOf(overFlowBriConditionA)/effectiveTestDataList.size());
-		brightnessUniformityResponse.setBriConditionBResault(1.0 - Double.valueOf(overFlowBriConditionB)/effectiveTestDataList.size());
-		return brightnessUniformityResponse;
+		return UniformityResponse;
+	}
+
+	@Override
+	public List<CcdTestRule> GetCcdTestRuleList() {
+		CcdTestRuleExample ccdTestRuleExample = new CcdTestRuleExample();
+		List<CcdTestRule> ccdTestRuleList = ccdTestRuleMapper.selectByExample(ccdTestRuleExample);
+		return ccdTestRuleList;
 	}
 
 }

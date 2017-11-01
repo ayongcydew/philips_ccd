@@ -94,7 +94,7 @@ public class TestFileImport {
 		effectiveTestDataList = dataHandleService.GetEffectiveTestData(planName, ccdTestDataList, maxBri);
 		avgTestData = dataHandleService.GetAvg(planName, ccdTestDataList);
 		Map<String, Double> ellipticMap = dataHandleService.CalculateEllipticVaule(avgTestData);
-		List<String> xxx = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
+		List<Double> xxx = dataHandleService.CalculatePixelPointRang(avgTestData, effectiveTestDataList, ellipticMap, ccdTestConfig);
 		System.out.println(xxx);
 	}
 	

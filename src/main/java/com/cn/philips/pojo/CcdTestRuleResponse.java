@@ -1,9 +1,11 @@
 package com.cn.philips.pojo;
 
-public class CcdTestRule {
+public class CcdTestRuleResponse {
     private Integer id;
 
     private Integer planid;
+    
+    private String planname;
 
     private Integer isbriactivated;
 
@@ -33,7 +35,15 @@ public class CcdTestRule {
         this.planid = planid;
     }
 
-    public Integer getIsbriactivated() {
+    public String getPlanname() {
+		return planname;
+	}
+
+	public void setPlanname(String planname) {
+		this.planname = planname;
+	}
+
+	public Integer getIsbriactivated() {
         return isbriactivated;
     }
 
@@ -65,19 +75,20 @@ public class CcdTestRule {
         this.iscoloractivated = iscoloractivated;
     }
 
-    public Double getColorconditiona() {
-        return colorconditiona;
-    }
+	public Double getColorconditiona() {
+		return colorconditiona;
+	}
 
-    public void setColorconditiona(Double colorconditiona) {
-        this.colorconditiona = colorconditiona;
-    }
+	public void setColorconditiona(Double colorconditiona) {
+		this.colorconditiona = colorconditiona;
+	}
 
-    public Double getColorconditionb() {
-        return colorconditionb;
-    }
+	public Double getColorconditionb() {
+		return colorconditionb;
+	}
 
-    public void setColorconditionb(Double colorconditionb) {
-        this.colorconditionb = colorconditionb;
-    }
+	public void setColorconditionb(Double colorconditionb) {
+		this.colorconditionb = colorconditionb;
+	}
+
 }
