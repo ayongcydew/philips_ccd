@@ -20,6 +20,8 @@
 					<th>SDCM1</th>
 					<th>SDCM2</th>
 					<th>SDCM3</th>
+					<th>SDCM4</th>
+					<th>SDCM5</th>
 				</tr>
 				<tr v-for="data in configlist">
 					<td>{{data.planName}}</td>
@@ -27,6 +29,8 @@
 					<td>{{data.sdcm1}}</td>
 					<td>{{data.sdcm2}}</td>
 					<td>{{data.sdcm3}}</td>
+					<td>{{data.sdcm4}}</td>
+					<td>{{data.sdcm5}}</td>
 				</tr>
 			</table>
 		</div>
@@ -56,6 +60,8 @@ function openImportWin(){
 			sdcm1: '',
 			sdcm2: '',
 			sdcm3: '',
+			sdcm4: '',
+			sdcm5: '',
 			configlist: [],
 		},
 		

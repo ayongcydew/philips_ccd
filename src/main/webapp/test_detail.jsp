@@ -59,9 +59,17 @@
 			<td class="ui_input_txt01">SDCM2:</td>
 			<td class="ui_input_txt02">{{toPercent(testresault.sdcm2Resault)}}</td>
 		</tr>
-				<tr>
+		<tr>
 			<td class="ui_input_txt01">SDCM3:</td>
 			<td class="ui_input_txt02">{{toPercent(testresault.sdcm3Resault)}}</td>
+		</tr>
+		<tr>
+			<td class="ui_input_txt01">SDCM4:</td>
+			<td class="ui_input_txt02">{{toPercent(testresault.sdcm4Resault)}}</td>
+		</tr>
+		<tr>
+			<td class="ui_input_txt01">SDCM5:</td>
+			<td class="ui_input_txt02">{{toPercent(testresault.sdcm5Resault)}}</td>
 		</tr>
 								
 	</table>

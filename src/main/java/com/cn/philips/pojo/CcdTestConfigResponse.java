@@ -14,6 +14,10 @@ public class CcdTestConfigResponse {
     private Integer sdcm2;
 
     private Integer sdcm3;
+    
+    private Integer sdcm4;
+    
+    private Integer sdcm5;
 
     public Integer getId() {
         return id;
@@ -70,4 +74,20 @@ public class CcdTestConfigResponse {
     public void setSdcm3(Integer sdcm3) {
         this.sdcm3 = sdcm3;
     }
-}
+
+	public Integer getSdcm4() {
+		return sdcm4;
+	}
+
+	public void setSdcm4(Integer sdcm4) {
+		this.sdcm4 = sdcm4;
+	}
+
+	public Integer getSdcm5() {
+		return sdcm5;
+	}
+
+	public void setSdcm5(Integer sdcm5) {
+		this.sdcm5 = sdcm5;
+	}
+ }

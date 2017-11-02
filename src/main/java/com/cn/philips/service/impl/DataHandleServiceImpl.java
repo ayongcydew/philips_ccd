@@ -181,6 +181,8 @@ public class DataHandleServiceImpl implements DataHandleService {
 		sdcmStepList.add(ccdTestConfig.getSdcm1());
 		sdcmStepList.add(ccdTestConfig.getSdcm2());
 		sdcmStepList.add(ccdTestConfig.getSdcm3());
+		sdcmStepList.add(ccdTestConfig.getSdcm4());
+		sdcmStepList.add(ccdTestConfig.getSdcm5());
 		List<Double> CalculatePixelResaultList = new ArrayList<Double>();
 		for (Integer step : sdcmStepList) {
 			
@@ -373,6 +375,8 @@ public class DataHandleServiceImpl implements DataHandleService {
 			ccdTestConfig.setSdcm1(3);
 			ccdTestConfig.setSdcm2(5);
 			ccdTestConfig.setSdcm3(7);
+			ccdTestConfig.setSdcm4(9);
+			ccdTestConfig.setSdcm5(12);
 			ccdTestConfig.setThreshold(0.3);
 		}
 		// TODO Auto-generated method stub
@@ -396,6 +400,8 @@ public class DataHandleServiceImpl implements DataHandleService {
 			ccdTestConfigResponseTemp.setSdcm1(ccdTestConfig.getSdcm1());
 			ccdTestConfigResponseTemp.setSdcm2(ccdTestConfig.getSdcm2());
 			ccdTestConfigResponseTemp.setSdcm3(ccdTestConfig.getSdcm3());
+			ccdTestConfigResponseTemp.setSdcm4(ccdTestConfig.getSdcm4());
+			ccdTestConfigResponseTemp.setSdcm5(ccdTestConfig.getSdcm5());
 			ccdTestConfigResponseList.add(ccdTestConfigResponseTemp);
 		}
 		// TODO Auto-generated method stub
@@ -459,7 +465,9 @@ public class DataHandleServiceImpl implements DataHandleService {
 		ccdTestResault.setMaxDeltaUV(avgTestData.getMaxDeltaUV());
 		ccdTestResault.setSdcm1Resault(sdcmResaultList.get(0));
 		ccdTestResault.setSdcm2Resault(sdcmResaultList.get(1));
-		ccdTestResault.setSdcm3Resault(sdcmResaultList.get(2));		
+		ccdTestResault.setSdcm3Resault(sdcmResaultList.get(2));	
+		ccdTestResault.setSdcm4Resault(sdcmResaultList.get(3));	
+		ccdTestResault.setSdcm5Resault(sdcmResaultList.get(4));	
 		return ccdTestResault;
 	}
 	

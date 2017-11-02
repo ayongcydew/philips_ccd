@@ -67,6 +67,12 @@ public class ImportTestDataController {
            Iterator iter = multiRequest.getFileNames();
 
            List<String> fileList = new ArrayList();
+           
+           String directoryPath="C:/CCDUploadFiles/"+ ccdTestPlan.getPlanName() + new Date().getTime();
+           
+           if(!new File(directoryPath).exists())   {
+               new File(directoryPath).mkdirs();
+             } 
             
            while(iter.hasNext())
            {
@@ -74,12 +80,9 @@ public class ImportTestDataController {
                MultipartFile file=multiRequest.getFile(iter.next().toString());
                if(file!=null)
                {
-                   String directoryPath="C:/CCDUploadFiles/"+ ccdTestPlan.getPlanName();
-                   String filePath = directoryPath + '/' + file.getOriginalFilename();
-                   
-                   if(!new File(directoryPath).exists())   {
-                       new File(directoryPath).mkdirs();
-                     } 
+            	   
+                   String filePath = directoryPath + '/' + file.getOriginalFilename();            
+
                    //ÉÏ´«
                    if(!(new File(filePath).exists())) {
                 	   file.transferTo(new File(filePath));  

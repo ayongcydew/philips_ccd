@@ -25,6 +25,10 @@ public class CcdTestResault {
 	private Double sdcm2Resault;
 	
 	private Double sdcm3Resault;
+	
+	private Double sdcm4Resault;
+	
+	private Double sdcm5Resault;
 
 	public String getPlanName() {
 		return planName;
@@ -121,4 +125,21 @@ public class CcdTestResault {
 	public void setSdcm3Resault(Double sdcm3Resault) {
 		this.sdcm3Resault = sdcm3Resault;
 	}
+
+	public Double getSdcm4Resault() {
+		return sdcm4Resault;
+	}
+
+	public void setSdcm4Resault(Double sdcm4Resault) {
+		this.sdcm4Resault = sdcm4Resault;
+	}
+
+	public Double getSdcm5Resault() {
+		return sdcm5Resault;
+	}
+
+	public void setSdcm5Resault(Double sdcm5Resault) {
+		this.sdcm5Resault = sdcm5Resault;
+	}
+	
 }

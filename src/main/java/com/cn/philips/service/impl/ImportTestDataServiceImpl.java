@@ -28,6 +28,7 @@ import com.cn.philips.dao.UserCCDMapper;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
+import com.cn.philips.pojo.CcdTestPlanExample;
 import com.cn.philips.pojo.CcdTestRule;
 import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.ImportTestDataService;
@@ -55,9 +56,6 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 			throw new Exception("please input the planName");	
 		}
 		
-		int i = 0;
-		int j = 0;
-		
 		ArrayList<ArrayList<Double>>  arrayTxtListBriPath = new ArrayList();
 		ArrayList<ArrayList<Double>>  arrayTxtListXPath = new ArrayList();
 		ArrayList<ArrayList<Double>>  arrayTxtListYPath = new ArrayList();
@@ -69,21 +67,51 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 		if (uPath != null) {arrayTxtListUPath = ImportFromTxtFile(uPath);};
 		if (vPath != null) {arrayTxtListVPath = ImportFromTxtFile(vPath);};
 		
+		Integer file_rows = arrayTxtListXPath.size();
+		if (file_rows == 0) throw new Exception("文件没有数据");
+		
+		Integer file_columns = arrayTxtListXPath.get(1).size();
+		if (file_columns == 0) throw new Exception("文件没有数据");
+	
+		Integer start_rows = 0;
+		
+		
 		ArrayList<CcdTestData> testDataDetailList = new ArrayList<CcdTestData>();
+		
+		CcdTestPlan ccdTestPlan = dataHandleService.GetCcdTestPlanByName(planName);
+		if (ccdTestPlan != null) {
+			start_rows = ccdTestPlan.getPixelX();
+			CcdTestPlan ccdTestPlanNew = new CcdTestPlan();
+			ccdTestPlanNew.setPixelX(start_rows + file_rows);
+			CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
+			CcdTestPlanExample.Criteria criteria = ccdTestPlanExample.createCriteria();
+			criteria.andPlanNameEqualTo(planName);
+			this.ccdTestPlanMapper.updateByExampleSelective(ccdTestPlanNew, ccdTestPlanExample);
+		} else {
+			CcdTestPlan ccdTestPlanNew = new CcdTestPlan();
+			ccdTestPlanNew.setPlanName(planName);
+			ccdTestPlanNew.setDescription(description);
+			ccdTestPlanNew.setPixelX(file_rows);
+			ccdTestPlanNew.setPixelY(file_columns);
+			ccdTestPlanNew.setStartTime(startTime);
+			ccdTestPlanNew.setOperatorName(operatorName);
+			this.ccdTestPlanMapper.insert(ccdTestPlanNew);
+			
+			CcdTestPlan ccdTestPlanUpdated = dataHandleService.GetCcdTestPlanByName(planName);			
+			CcdTestRule ccdTestRule = new CcdTestRule();
+			ccdTestRule.setPlanid(ccdTestPlanUpdated.getId());
+			this.ccdTestRuleMapper.insert(ccdTestRule);		
+		}
+		
 		try {
-			if (arrayTxtListXPath.size() == 0) throw new Exception("X坐标没有参数");
 
-			for (i = 0; i < arrayTxtListXPath.size(); i ++) {
-				for ( j = 0; j < (arrayTxtListXPath.get(i)).size(); j++) {
+			for (int i = 0 ; i < file_rows; i ++) {
+				for (int j = 0; j < file_columns; j++) {
 					CcdTestData testDataDetail = new CcdTestData();
-					// TODO 插入数据需要做planName的判断
-					testDataDetail.setPlanName(planName);
-					if (planName.equals(null) || planName =="") {
-						throw new Exception("planName can't be null");
-						
-					}
+
 					// TODO 要考虑下标溢出的情况，和没有数据的情况，以后再考虑
-					testDataDetail.setLocx(i);
+					testDataDetail.setPlanName(planName);
+					testDataDetail.setLocx(start_rows + i);
 					testDataDetail.setLocy(j);
 					testDataDetail.setBri(arrayTxtListBriPath.get(i).get(j) != null? arrayTxtListBriPath.get(i).get(j):new Double(0.00));
 					testDataDetail.setX(arrayTxtListXPath.get(i).get(j) != null? arrayTxtListXPath.get(i).get(j):new Double(0.00));
@@ -101,33 +129,9 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 			e.printStackTrace();
 		}
 		
-		// TODO Auto-generated method stub
-		
-		CcdTestPlan ccdTestPlan = dataHandleService.GetCcdTestPlanByName(planName);
-		if (ccdTestPlan == null) {
-			CcdTestPlan ccdTestPlan1 = new CcdTestPlan();
-			ccdTestPlan1.setPlanName(planName);
-			ccdTestPlan1.setDescription(description);
-			ccdTestPlan1.setPixelX(i);
-			ccdTestPlan1.setPixelY(j);
-			ccdTestPlan1.setStartTime(startTime);
-			ccdTestPlan1.setOperatorName(operatorName);
-			this.ccdTestPlanMapper.insert(ccdTestPlan1);		
-			CcdTestPlan ccdTestPlan2 = dataHandleService.GetCcdTestPlanByName(planName);
-						
-			CcdTestRule ccdTestRule = new CcdTestRule();
-			ccdTestRule.setPlanid(ccdTestPlan2.getId());
-			this.ccdTestRuleMapper.insert(ccdTestRule);
-			
-			for (CcdTestData testDataDetail : testDataDetailList) {
-				this.ccdTestDataMapper.insert(testDataDetail);
-			}
-			
-		} else {
-			System.out.println("planName exist");
-//			throw new Exception("planName exist");
-		}
-		
+		for (CcdTestData testDataDetail : testDataDetailList) {
+			this.ccdTestDataMapper.insert(testDataDetail);
+		}	
 
 	}
 	

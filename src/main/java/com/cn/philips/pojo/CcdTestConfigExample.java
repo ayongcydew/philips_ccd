@@ -463,6 +463,126 @@ public class CcdTestConfigExample {
             addCriterion("sdcm3 not between", value1, value2, "sdcm3");
             return (Criteria) this;
         }
+
+        public Criteria andSdcm4IsNull() {
+            addCriterion("sdcm4 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4IsNotNull() {
+            addCriterion("sdcm4 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4EqualTo(Integer value) {
+            addCriterion("sdcm4 =", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4NotEqualTo(Integer value) {
+            addCriterion("sdcm4 <>", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4GreaterThan(Integer value) {
+            addCriterion("sdcm4 >", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4GreaterThanOrEqualTo(Integer value) {
+            addCriterion("sdcm4 >=", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4LessThan(Integer value) {
+            addCriterion("sdcm4 <", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4LessThanOrEqualTo(Integer value) {
+            addCriterion("sdcm4 <=", value, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4In(List<Integer> values) {
+            addCriterion("sdcm4 in", values, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4NotIn(List<Integer> values) {
+            addCriterion("sdcm4 not in", values, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4Between(Integer value1, Integer value2) {
+            addCriterion("sdcm4 between", value1, value2, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm4NotBetween(Integer value1, Integer value2) {
+            addCriterion("sdcm4 not between", value1, value2, "sdcm4");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5IsNull() {
+            addCriterion("sdcm5 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5IsNotNull() {
+            addCriterion("sdcm5 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5EqualTo(Integer value) {
+            addCriterion("sdcm5 =", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5NotEqualTo(Integer value) {
+            addCriterion("sdcm5 <>", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5GreaterThan(Integer value) {
+            addCriterion("sdcm5 >", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5GreaterThanOrEqualTo(Integer value) {
+            addCriterion("sdcm5 >=", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5LessThan(Integer value) {
+            addCriterion("sdcm5 <", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5LessThanOrEqualTo(Integer value) {
+            addCriterion("sdcm5 <=", value, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5In(List<Integer> values) {
+            addCriterion("sdcm5 in", values, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5NotIn(List<Integer> values) {
+            addCriterion("sdcm5 not in", values, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5Between(Integer value1, Integer value2) {
+            addCriterion("sdcm5 between", value1, value2, "sdcm5");
+            return (Criteria) this;
+        }
+
+        public Criteria andSdcm5NotBetween(Integer value1, Integer value2) {
+            addCriterion("sdcm5 not between", value1, value2, "sdcm5");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
