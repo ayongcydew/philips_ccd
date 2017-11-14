@@ -54,12 +54,13 @@ public class TestFileImport {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		Date startTime = sdf.parse("1990-2-2");
 		String operatorName = "tester2";
-		String Bri = "C:\\20170120\\L.txt";
-		String X = "C:\\20170120\\x.txt";
-		String Y = "C:\\20170120\\y.txt";
-		String U = "C:\\20170120\\u.txt";
-		String V = "C:\\20170120\\v.txt";
-		importTestDataService.InsertTestData(planName, description, startTime, operatorName, Bri, X, Y, U, V);
+		List<String> pathString = new ArrayList<String>();
+		pathString.add("C:\\20170120\\L.txt");
+		pathString.add("C:\\20170120\\x.txt");
+		pathString.add("C:\\20170120\\y.txt");
+		pathString.add("C:\\20170120\\u.txt");
+		pathString.add("C:\\20170120\\v.txt");
+		importTestDataService.InsertTestData(planName, description, startTime, operatorName, pathString);
 	}
 	
 	@Test

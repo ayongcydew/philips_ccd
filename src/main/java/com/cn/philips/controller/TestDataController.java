@@ -154,4 +154,16 @@ public class TestDataController {
 		return uniformityResponse;	
 	
 	}
+	
+//	@RequestMapping(value="/deleteTestData",method=RequestMethod.GET)
+//	@ResponseBody
+//	public String  deleteTestData(HttpServletRequest request,HttpServletResponse response, @RequestBody String requestBody) throws Exception{
+//		String planName = request.getParameter("planName");
+//	
+//		if (planName == "") { throw new Exception("Parameter Error");}
+//		
+//		dataHandleService.deleteTestData("planName");
+//	
+//		return "success";
+//	}
 }

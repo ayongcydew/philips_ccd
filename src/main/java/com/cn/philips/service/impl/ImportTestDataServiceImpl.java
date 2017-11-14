@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,38 +52,51 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 	private DataHandleService dataHandleService;
 	
 	@Override
-	public void InsertTestData(String planName, String description, Date startTime, String operatorName, String briPath, 
-			String xPath,String yPath,String uPath,String vPath) throws Exception {
+	public void InsertTestData(String planName, String description, Date startTime, String operatorName, List<String> insertFileList) throws Exception {
 		if (planName.equals(null)) {
 			throw new Exception("please input the planName");	
 		}
 		
-		ArrayList<ArrayList<Double>>  arrayTxtListBriPath = new ArrayList();
-		ArrayList<ArrayList<Double>>  arrayTxtListXPath = new ArrayList();
-		ArrayList<ArrayList<Double>>  arrayTxtListYPath = new ArrayList();
-		ArrayList<ArrayList<Double>>  arrayTxtListUPath = new ArrayList();
-		ArrayList<ArrayList<Double>>  arrayTxtListVPath = new ArrayList();
-		if (briPath != null) {arrayTxtListBriPath = ImportFromTxtFile(briPath);};
-		if (xPath != null) {arrayTxtListXPath = ImportFromTxtFile(xPath);};
-		if (yPath != null) {arrayTxtListYPath = ImportFromTxtFile(yPath);};
-		if (uPath != null) {arrayTxtListUPath = ImportFromTxtFile(uPath);};
-		if (vPath != null) {arrayTxtListVPath = ImportFromTxtFile(vPath);};
+		Map <String, ArrayList<ArrayList<Double>>> insertFileMap = new HashMap<String, ArrayList<ArrayList<Double>>>();
+		for (int i = 0; i < insertFileList.size(); i++) {
+			String[] filePathArray = insertFileList.get(i).split("\\\\");
+			Integer filePathArrayLength = filePathArray.length;
+			String profixName = filePathArray[filePathArrayLength-1].split("_")[0];
+			switch (profixName) {
+			   case("L"): {insertFileMap.put("L", ImportFromTxtFile(insertFileList.get(i))); break;}
+			   case("X"): {insertFileMap.put("X", ImportFromTxtFile(insertFileList.get(i))); break;}
+			   case("Y"): {insertFileMap.put("Y", ImportFromTxtFile(insertFileList.get(i))); break;}
+			   case("U"): {insertFileMap.put("U", ImportFromTxtFile(insertFileList.get(i))); break;}
+			   case("V"): {insertFileMap.put("V", ImportFromTxtFile(insertFileList.get(i))); break;}
+		   	   }
+		}
 		
-		Integer file_rows = arrayTxtListXPath.size();
-		if (file_rows == 0) throw new Exception("文件没有数据");
+
+		Iterator<String> iter = insertFileMap.keySet().iterator();
+		while (iter.hasNext()) {
+
+		    String key = iter.next();
+		    if (insertFileMap.get(key).size() == 0) throw new Exception("文件没有数据");
+		    if (insertFileMap.get(key).get(1).size() == 0) throw new Exception("文件没有数据");
+
+		}
 		
-		Integer file_columns = arrayTxtListXPath.get(1).size();
-		if (file_columns == 0) throw new Exception("文件没有数据");
+		//use "X" file as the default length  
+		Integer file_rows = insertFileMap.get("X").size();	
+		Integer file_columns = insertFileMap.get("X").get(1).size();	
 	
 		Integer start_rows = 0;
-		
 		
 		ArrayList<CcdTestData> testDataDetailList = new ArrayList<CcdTestData>();
 		
 		CcdTestPlan ccdTestPlan = dataHandleService.GetCcdTestPlanByName(planName);
+		
+		//if planName exist--update the plan
+		// if planName no exist--create a new one.
 		if (ccdTestPlan != null) {
 			start_rows = ccdTestPlan.getPixelX();
 			CcdTestPlan ccdTestPlanNew = new CcdTestPlan();
+			
 			ccdTestPlanNew.setPixelX(start_rows + file_rows);
 			CcdTestPlanExample ccdTestPlanExample = new CcdTestPlanExample();
 			CcdTestPlanExample.Criteria criteria = ccdTestPlanExample.createCriteria();
@@ -113,12 +128,11 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 					testDataDetail.setPlanName(planName);
 					testDataDetail.setLocx(start_rows + i);
 					testDataDetail.setLocy(j);
-					testDataDetail.setBri(arrayTxtListBriPath.get(i).get(j) != null? arrayTxtListBriPath.get(i).get(j):new Double(0.00));
-					testDataDetail.setX(arrayTxtListXPath.get(i).get(j) != null? arrayTxtListXPath.get(i).get(j):new Double(0.00));
-					testDataDetail.setY(arrayTxtListYPath.get(i).get(j) != null? arrayTxtListYPath.get(i).get(j):new Double(0.00));
-					testDataDetail.setU(arrayTxtListUPath.get(i).get(j) != null? arrayTxtListUPath.get(i).get(j):new Double(0.00));
-					testDataDetail.setV(arrayTxtListVPath.get(i).get(j) != null? arrayTxtListVPath.get(i).get(j):new Double(0.00));
-					
+					testDataDetail.setBri(insertFileMap.get("L").get(i).get(j) != null? insertFileMap.get("L").get(i).get(j):new Double(0.00));
+					testDataDetail.setX(insertFileMap.get("X").get(i).get(j) != null? insertFileMap.get("X").get(i).get(j):new Double(0.00));
+					testDataDetail.setY(insertFileMap.get("Y").get(i).get(j) != null? insertFileMap.get("Y").get(i).get(j):new Double(0.00));
+					testDataDetail.setU(insertFileMap.get("U").get(i).get(j) != null? insertFileMap.get("U").get(i).get(j):new Double(0.00));
+					testDataDetail.setV(insertFileMap.get("V").get(i).get(j) != null? insertFileMap.get("V").get(i).get(j):new Double(0.00));					
 					testDataDetailList.add(testDataDetail);
 				}
 			}

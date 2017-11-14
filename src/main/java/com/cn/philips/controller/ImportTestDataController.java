@@ -1,6 +1,7 @@
 package com.cn.philips.controller;
 
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,7 +70,7 @@ public class ImportTestDataController {
 
            List<String> fileList = new ArrayList();
            
-           String directoryPath="C:/CCDUploadFiles/"+ ccdTestPlan.getPlanName() + new Date().getTime();
+           String directoryPath="C:/CCDUploadFiles/"+ ccdTestPlan.getPlanName() + "_" + new Date().getTime();
            
            if(!new File(directoryPath).exists())   {
                new File(directoryPath).mkdirs();
@@ -79,10 +81,8 @@ public class ImportTestDataController {
                //一次遍历所有文件
                MultipartFile file=multiRequest.getFile(iter.next().toString());
                if(file!=null)
-               {
-            	   
+               {          	   
                    String filePath = directoryPath + '/' + file.getOriginalFilename();            
-
                    //上传
                    if(!(new File(filePath).exists())) {
                 	   file.transferTo(new File(filePath));  
@@ -99,15 +99,66 @@ public class ImportTestDataController {
         		   ccdTestPlan.getDescription(),
         		   ccdTestPlan.getStartTime(),
         		   ccdTestPlan.getOperatorName(),
-        		   fileList.get(0),
-        		   fileList.get(1),
-        		   fileList.get(2),
-        		   fileList.get(3),
-        		   fileList.get(4));
+        		   fileList);
        }
        long  endTime=System.currentTimeMillis();
        System.out.println("runtime: "+String.valueOf(endTime-startUpTime)+"ms");
        
        return "upload success";
     }
+	
+	
+	@RequestMapping(value = "/testDataLocal", method = RequestMethod.POST)
+	@ResponseBody
+	public String UploadFile_test(HttpServletRequest request, HttpServletResponse response,  @RequestBody String requestBody) throws Exception 
+    {
+		String filePath = request.getParameter("filepath");
+		String planName = request.getParameter("planname");
+		
+       
+       File file = new File(filePath);
+       List<String> insertFileList = new ArrayList();
+	   if (!file.isDirectory()) {
+//	   System.out.println("文件");
+//	   System.out.println("path=" + file.getPath());
+//	   System.out.println("absolutepath=" + file.getAbsolutePath());
+//	   System.out.println("name=" + file.getName());
+	   } else if (file.isDirectory()) {
+		   System.out.println("上传文件夹");
+		   if (planName == null) {throw new Exception("测试名称不能为空"); }
+		   
+		   String[] filelist = file.list();
+		   
+		   for (int i = 0; i < filelist.length; i++) {
+			   File readfile = new File(filePath + "\\" + filelist[i]);		   
+			   if (!readfile.isDirectory()) {
+				   String profixName = readfile.getName().split("_")[0];
+				   switch (profixName) {
+					   case("L"): {insertFileList.add(readfile.getAbsolutePath()); break;}
+					   case("X"): {insertFileList.add(readfile.getAbsolutePath()); break;}
+					   case("Y"): {insertFileList.add(readfile.getAbsolutePath()); break;}
+					   case("U"): {insertFileList.add(readfile.getAbsolutePath()); break;}
+					   case("V"): {insertFileList.add(readfile.getAbsolutePath()); break;}
+				   	   }
+				   } 
+			   }
+		   if (insertFileList.size() != 5) { throw new Exception("文件个数不对"); }
+		   }
+       CcdTestPlan ccdTestPlan = new CcdTestPlan();
+       SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+      //获取参数
+       ccdTestPlan.setPlanName(request.getParameter("planname"));
+       ccdTestPlan.setDescription(request.getParameter("description"));
+       ccdTestPlan.setStartTime(sdf.parse(request.getParameter("starttime")));
+       ccdTestPlan.setOperatorName(request.getParameter("operatorname"));
+
+       importTestDataService.InsertTestData(
+    		   ccdTestPlan.getPlanName(),
+    		   ccdTestPlan.getDescription(),
+    		   ccdTestPlan.getStartTime(),
+    		   ccdTestPlan.getOperatorName(),
+    		   insertFileList);
+	return planName + "upload successfully";
+    }
 }
+		

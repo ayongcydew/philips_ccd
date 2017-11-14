@@ -98,7 +98,7 @@
 <script language="javascript">
 
 function openImportWin(){
-	window.open ('test_import.jsp', 'newwindow', 'height=600, width=500, top=200,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+	window.open ('test_import_local.jsp', 'newwindow', 'height=600, width=500, top=200,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
 }
 
 function checkBox(obj) {
