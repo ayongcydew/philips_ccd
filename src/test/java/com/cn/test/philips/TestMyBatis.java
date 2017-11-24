@@ -1,6 +1,7 @@
 package com.cn.test.philips;
 
 import java.util.List;
+import java.io.IOException;
 import java.math.*;
 
 import javax.annotation.Resource;
@@ -15,9 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.philips.pojo.TurntableData;
 import com.cn.philips.pojo.User;
 import com.cn.philips.pojo.UserCCD;
 import com.cn.philips.service.IUserService;
+import com.cn.philips.service.TurntableDataService;
 import com.cn.philips.service.UserCCDService;
 
 @RunWith(SpringJUnit4ClassRunner.class)		//
@@ -31,7 +34,11 @@ public class TestMyBatis {
 	
 	@Resource
 	private UserCCDService userCCDService;
-//	@Before
+	
+	@Resource
+	private TurntableDataService turntableDataService;
+	
+	//	@Before
 //	public void before() {
 //		ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 //		userService = (IUserService) ac.getBean("userService");
@@ -61,7 +68,7 @@ public class TestMyBatis {
 		int sum=0;
 		int total=0;
 		for(int i=0;i<userList.size();i++){		
-		     if (userList.get(i).getAge() != null) {//判断是否为数�??
+		     if (userList.get(i).getAge() != null) {//判断是否为数�??
 		          sum+= userList.get(i).getAge();
 		          total+=1;
 		     }
@@ -71,6 +78,24 @@ public class TestMyBatis {
 			 avg_age=sum/total;
 		System.out.println("平均年龄" + avg_age);
 		logger.info(JSON.toJSONString(avg_age));
+	}
+	
+	@Test
+	public void test4() throws IOException {
+		
+		String filePath = "c:/aaa.ini";
+		
+//		TurntableData turntableData = turntableDataService.getTurntableData(filePath);
+		TurntableData turntableData = new TurntableData();
+		turntableData.setReset("a");
+		turntableData.setRunmode("b");
+		turntableData.setStatus("c");
+		turntableData.setAngle("d");
+		turntableData.setInterval("d");
+		turntableData.setSpeed("f");
+		turntableDataService.setTurntableData(turntableData, filePath);
+		
+		System.out.println(turntableData.getReset());
 	}
 	
 }
