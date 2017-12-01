@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.cn.philips.dao.CcdTestConfigMapper;
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.CcdTestPlanMapper;
+import com.cn.philips.dao.CcdTestRuleMapper;
 import com.cn.philips.dao.G11MatrixMapper;
 import com.cn.philips.dao.G12MatrixMapper;
 import com.cn.philips.dao.G22MatrixMapper;
@@ -28,6 +29,7 @@ import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanExample;
 import com.cn.philips.pojo.CcdTestPlanNew;
 import com.cn.philips.pojo.CcdTestResault;
+import com.cn.philips.pojo.CcdTestRuleExample;
 import com.cn.philips.pojo.G11Matrix;
 import com.cn.philips.pojo.G11MatrixExample;
 import com.cn.philips.pojo.G12Matrix;
@@ -44,6 +46,9 @@ public class DataHandleServiceImpl implements DataHandleService {
 	
 	@Resource
 	private CcdTestPlanMapper ccdTestPlanMapper;
+	
+	@Resource
+	private CcdTestRuleMapper ccdTestRuleMapper;
 	
 	@Resource
 	private G11MatrixMapper g11MatrixMapper;
@@ -489,4 +494,27 @@ public class DataHandleServiceImpl implements DataHandleService {
 		return ccdTestDataArray;
 	}
 	
+	@Override
+	public String DeleteTestData(String planName) throws Exception {
+		CcdTestPlan ccdTestPlan = GetCcdTestPlanByName(planName);
+		
+		CcdTestDataExample ccdTestDataExample = new CcdTestDataExample();
+		CcdTestDataExample.Criteria DataCriteria = ccdTestDataExample.createCriteria();
+		DataCriteria.andPlanNameEqualTo(planName);
+		this.ccdTestDataMapper.deleteByExample(ccdTestDataExample);
+		
+		CcdTestConfigExample ccdTestConfigExample = new CcdTestConfigExample();
+		CcdTestConfigExample.Criteria ConfigCriteria = ccdTestConfigExample.createCriteria();
+		ConfigCriteria.andPlanidEqualTo(ccdTestPlan.getId());
+		this.ccdTestConfigMapper.deleteByExample(ccdTestConfigExample);
+		
+		CcdTestRuleExample ccdTestRuleExample = new CcdTestRuleExample();
+		CcdTestRuleExample.Criteria RuleCriteria = ccdTestRuleExample.createCriteria();
+		RuleCriteria.andPlanidEqualTo(ccdTestPlan.getId());	
+		this.ccdTestRuleMapper.deleteByExample(ccdTestRuleExample);
+		
+		this.ccdTestPlanMapper.deleteByPrimaryKey(ccdTestPlan.getId());
+		
+		return "success";
+	}
 }

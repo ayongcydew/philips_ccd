@@ -97,5 +97,4 @@ public class TestMyBatis {
 		
 		System.out.println(turntableData.getReset());
 	}
-	
 }

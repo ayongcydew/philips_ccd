@@ -22,11 +22,13 @@ import java.io.LineNumberReader;
 
 import org.springframework.stereotype.Service;
 
+import com.cn.philips.dao.CcdTestConfigMapper;
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.CcdTestPlanMapper;
 import com.cn.philips.dao.CcdTestRuleMapper;
 import com.cn.philips.dao.CcdTestDataMapper;
 import com.cn.philips.dao.UserCCDMapper;
+import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestDataExample;
 import com.cn.philips.pojo.CcdTestPlan;
@@ -47,6 +49,9 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 	
 	@Resource
 	private CcdTestRuleMapper ccdTestRuleMapper;
+	
+	@Resource
+	private CcdTestConfigMapper ccdTestConfigMapper;
 	
 	@Resource
 	private DataHandleService dataHandleService;
@@ -112,7 +117,18 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 			ccdTestPlanNew.setOperatorName(operatorName);
 			this.ccdTestPlanMapper.insert(ccdTestPlanNew);
 			
-			CcdTestPlan ccdTestPlanUpdated = dataHandleService.GetCcdTestPlanByName(planName);			
+			CcdTestPlan ccdTestPlanUpdated = dataHandleService.GetCcdTestPlanByName(planName);
+			
+			CcdTestConfig ccdTestConfig = new CcdTestConfig();
+			ccdTestConfig.setPlanid(ccdTestPlanUpdated.getId());
+			ccdTestConfig.setSdcm1(6);
+			ccdTestConfig.setSdcm2(12);
+			ccdTestConfig.setSdcm3(18);
+			ccdTestConfig.setSdcm4(24);
+			ccdTestConfig.setSdcm5(30);
+			ccdTestConfig.setThreshold(0.3);
+			this.ccdTestConfigMapper.insert(ccdTestConfig);
+			
 			CcdTestRule ccdTestRule = new CcdTestRule();
 			ccdTestRule.setPlanid(ccdTestPlanUpdated.getId());
 			this.ccdTestRuleMapper.insert(ccdTestRule);		

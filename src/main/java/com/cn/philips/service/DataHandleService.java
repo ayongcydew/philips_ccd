@@ -46,4 +46,6 @@ public interface DataHandleService {
 	public CcdTestPlan GetCcdTestPlanById(Integer planId);
 	
 	public CcdTestData[][] convertCcdTesgDataListToArray(String planName, ArrayList<CcdTestData> ccdTestDataList);
+
+	public String DeleteTestData(String planName) throws Exception;
 }

@@ -143,4 +143,9 @@ public class TestFileImport {
 		System.out.println(response.getBriConditionAResault());
 		System.out.println(response.getBriConditionBResault());
 	}
+	
+	@Test
+	public void DeleteTestData() throws Exception {
+		String testR = dataHandleService.DeleteTestData("test1201");
+	}
 }
