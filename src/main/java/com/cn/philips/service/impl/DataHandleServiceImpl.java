@@ -369,14 +369,15 @@ public class DataHandleServiceImpl implements DataHandleService {
 			ccdTestConfig = ccdTestConfigList.get(0);
 		} else {
 			
+//			ccdTestConfig = ccdTestConfigMapper.selectByPrimaryKey(0);
 			// the first one will be used as the default config
 			ccdTestConfig.setId(0);
 			ccdTestConfig.setPlanid(0);
-			ccdTestConfig.setSdcm1(3);
-			ccdTestConfig.setSdcm2(5);
-			ccdTestConfig.setSdcm3(7);
-			ccdTestConfig.setSdcm4(9);
-			ccdTestConfig.setSdcm5(12);
+			ccdTestConfig.setSdcm1(6);
+			ccdTestConfig.setSdcm2(12);
+			ccdTestConfig.setSdcm3(18);
+			ccdTestConfig.setSdcm4(24);
+			ccdTestConfig.setSdcm5(30);
 			ccdTestConfig.setThreshold(0.3);
 		}
 		// TODO Auto-generated method stub

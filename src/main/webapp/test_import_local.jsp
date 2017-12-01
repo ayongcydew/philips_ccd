@@ -39,12 +39,17 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="ui_text_rt">导入测试个数</td>
+					<td class="ui_text_lt">
+						<input type="text" id="testnums" name="testnums"  value="" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
 					<td class="ui_text_rt">文件夹存放位置</td>
 					<td class="ui_text_lt">
 						<input type="text" id="filepath" name="filepath"  value="" class="ui_input_txt02"/>
 					</td>
-				</tr>
-				
+				</tr>			
 				<tr>
 					<td>&nbsp;</td>
 					<td class="ui_text_lt">

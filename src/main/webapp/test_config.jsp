@@ -17,11 +17,11 @@
 				<tr>
 					<th>测试名称</th>
 					<th>THRESHOLD</th>
-					<th>SDCM1</th>
-					<th>SDCM2</th>
-					<th>SDCM3</th>
-					<th>SDCM4</th>
-					<th>SDCM5</th>
+					<th>SDCM_A</th>
+					<th>SDCM_B</th>
+					<th>SDCM_C</th>
+					<th>SDCM_D</th>
+					<th>SDCM_E</th>
 				</tr>
 				<tr v-for="data in configlist">
 					<td>{{data.planName}}</td>
