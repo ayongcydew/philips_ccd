@@ -2,6 +2,7 @@ package com.cn.test.philips;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.math.*;
@@ -24,10 +25,12 @@ import com.cn.philips.pojo.UniformityResponse;
 import com.cn.philips.pojo.CcdTestConfig;
 import com.cn.philips.pojo.CcdTestConfigResponse;
 import com.cn.philips.pojo.CcdTestData;
+import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.User;
 import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.ImportTestDataService;
-import com.cn.philips.service.RuleService;;
+import com.cn.philips.service.RuleService;
+import com.github.pagehelper.PageInfo;;
 
 @RunWith(SpringJUnit4ClassRunner.class)	
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
@@ -51,6 +54,7 @@ public class TestFileImport {
 //		String LocY = "C:\\LocY.txt";
 		String planName = "testPlan2";
 		String description = "UnitTest2";
+		String type = "color";
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		Date startTime = sdf.parse("1990-2-2");
 		String operatorName = "tester2";
@@ -60,7 +64,7 @@ public class TestFileImport {
 		pathString.add("C:\\20170120\\y.txt");
 		pathString.add("C:\\20170120\\u.txt");
 		pathString.add("C:\\20170120\\v.txt");
-		importTestDataService.InsertTestData(planName, description, startTime, operatorName, pathString);
+		importTestDataService.InsertTestData(planName, description, startTime, operatorName, type, pathString);
 	}
 	
 	@Test
@@ -147,5 +151,16 @@ public class TestFileImport {
 	@Test
 	public void DeleteTestData() throws Exception {
 		String testR = dataHandleService.DeleteTestData("test1201");
+	}
+	
+	@Test
+	public void  GetPlanListNew() throws Exception {
+		Map<String, String> parameter = new HashMap<String, String>();
+//		parameter.put("planName", "test1205");
+		PageInfo<CcdTestPlan> testR = dataHandleService.GetPlanListNew(parameter);
+		for (CcdTestPlan ccdTestPlan : testR.getList()) {
+			String testQ = ccdTestPlan.getPlanName();
+			System.out.println(testQ);
+		}
 	}
 }

@@ -7,6 +7,8 @@ public class CcdTestConfig {
 
     private Double threshold;
 
+    private Integer type;
+
     private Integer sdcm1;
 
     private Integer sdcm2;
@@ -39,6 +41,14 @@ public class CcdTestConfig {
 
     public void setThreshold(Double threshold) {
         this.threshold = threshold;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getSdcm1() {

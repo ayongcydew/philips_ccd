@@ -27,6 +27,15 @@
 					</td>
 				</tr>
 				<tr>
+					<td class="ui_text_rt">类型</td>
+					<td class="ui_text_lt">
+						<select id="type" name="type" class="ui_select01">
+							<option value="color">color</option>
+							<option value="white">white</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td class="ui_text_rt">测试时间</td>
 					<td class="ui_text_lt">
 						<input type="text" id="starttime" name="starttime"  value="" class="ui_input_txt02"/>

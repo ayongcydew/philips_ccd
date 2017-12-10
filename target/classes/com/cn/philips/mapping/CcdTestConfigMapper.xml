@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="planid" property="planid" jdbcType="INTEGER" />
     <result column="Threshold" property="threshold" jdbcType="DOUBLE" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="sdcm1" property="sdcm1" jdbcType="INTEGER" />
     <result column="sdcm2" property="sdcm2" jdbcType="INTEGER" />
     <result column="sdcm3" property="sdcm3" jdbcType="INTEGER" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, planid, Threshold, sdcm1, sdcm2, sdcm3, sdcm4, sdcm5
+    id, planid, Threshold, type, sdcm1, sdcm2, sdcm3, sdcm4, sdcm5
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cn.philips.pojo.CcdTestConfigExample" >
     select
@@ -105,11 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.cn.philips.pojo.CcdTestConfig" >
     insert into ccd_test_config (id, planid, Threshold, 
-      sdcm1, sdcm2, sdcm3, 
-      sdcm4, sdcm5)
+      type, sdcm1, sdcm2, 
+      sdcm3, sdcm4, sdcm5
+      )
     values (#{id,jdbcType=INTEGER}, #{planid,jdbcType=INTEGER}, #{threshold,jdbcType=DOUBLE}, 
-      #{sdcm1,jdbcType=INTEGER}, #{sdcm2,jdbcType=INTEGER}, #{sdcm3,jdbcType=INTEGER}, 
-      #{sdcm4,jdbcType=INTEGER}, #{sdcm5,jdbcType=INTEGER})
+      #{type,jdbcType=INTEGER}, #{sdcm1,jdbcType=INTEGER}, #{sdcm2,jdbcType=INTEGER}, 
+      #{sdcm3,jdbcType=INTEGER}, #{sdcm4,jdbcType=INTEGER}, #{sdcm5,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.cn.philips.pojo.CcdTestConfig" >
     insert into ccd_test_config
@@ -122,6 +125,9 @@
       </if>
       <if test="threshold != null" >
         Threshold,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="sdcm1 != null" >
         sdcm1,
@@ -148,6 +154,9 @@
       </if>
       <if test="threshold != null" >
         #{threshold,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="sdcm1 != null" >
         #{sdcm1,jdbcType=INTEGER},
@@ -184,6 +193,9 @@
       <if test="record.threshold != null" >
         Threshold = #{record.threshold,jdbcType=DOUBLE},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
       <if test="record.sdcm1 != null" >
         sdcm1 = #{record.sdcm1,jdbcType=INTEGER},
       </if>
@@ -209,6 +221,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       planid = #{record.planid,jdbcType=INTEGER},
       Threshold = #{record.threshold,jdbcType=DOUBLE},
+      type = #{record.type,jdbcType=INTEGER},
       sdcm1 = #{record.sdcm1,jdbcType=INTEGER},
       sdcm2 = #{record.sdcm2,jdbcType=INTEGER},
       sdcm3 = #{record.sdcm3,jdbcType=INTEGER},
@@ -226,6 +239,9 @@
       </if>
       <if test="threshold != null" >
         Threshold = #{threshold,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="sdcm1 != null" >
         sdcm1 = #{sdcm1,jdbcType=INTEGER},
@@ -249,6 +265,7 @@
     update ccd_test_config
     set planid = #{planid,jdbcType=INTEGER},
       Threshold = #{threshold,jdbcType=DOUBLE},
+      type = #{type,jdbcType=INTEGER},
       sdcm1 = #{sdcm1,jdbcType=INTEGER},
       sdcm2 = #{sdcm2,jdbcType=INTEGER},
       sdcm3 = #{sdcm3,jdbcType=INTEGER},

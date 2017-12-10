@@ -57,7 +57,7 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 	private DataHandleService dataHandleService;
 	
 	@Override
-	public void InsertTestData(String planName, String description, Date startTime, String operatorName, List<String> insertFileList) throws Exception {
+	public void InsertTestData(String planName, String description, Date startTime, String operatorName, String type, List<String> insertFileList) throws Exception {
 		if (planName.equals(null)) {
 			throw new Exception("please input the planName");	
 		}
@@ -121,12 +121,28 @@ public class ImportTestDataServiceImpl implements ImportTestDataService {
 			
 			CcdTestConfig ccdTestConfig = new CcdTestConfig();
 			ccdTestConfig.setPlanid(ccdTestPlanUpdated.getId());
-			ccdTestConfig.setSdcm1(6);
-			ccdTestConfig.setSdcm2(12);
-			ccdTestConfig.setSdcm3(18);
-			ccdTestConfig.setSdcm4(24);
-			ccdTestConfig.setSdcm5(30);
-			ccdTestConfig.setThreshold(0.3);
+			if (type.equals("color")){
+				ccdTestConfig.setType(0);
+				ccdTestConfig.setSdcm1(6);
+				ccdTestConfig.setSdcm2(12);
+				ccdTestConfig.setSdcm3(18);
+				ccdTestConfig.setSdcm4(24);
+				ccdTestConfig.setSdcm5(30);
+				ccdTestConfig.setThreshold(0.3);
+			} else if (type.equals("white")) {
+				ccdTestConfig.setType(1);
+				ccdTestConfig.setSdcm1(3);
+				ccdTestConfig.setSdcm2(5);
+				ccdTestConfig.setSdcm3(7);
+				ccdTestConfig.setSdcm4(9);
+				ccdTestConfig.setSdcm5(12);
+				ccdTestConfig.setThreshold(0.3);
+			} else {
+				throw new Exception("¿‡–Õ¥ÌŒÛ");
+			}
+			
+			
+
 			this.ccdTestConfigMapper.insert(ccdTestConfig);
 			
 			CcdTestRule ccdTestRule = new CcdTestRule();

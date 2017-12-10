@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,9 @@ import com.cn.philips.service.DataHandleService;
 import com.cn.philips.service.IUserService;
 import com.cn.philips.service.RuleService;
 import com.cn.philips.service.UserCCDService;
+import com.github.pagehelper.PageInfo;
 
+@CrossOrigin(origins = "*")   
 @Controller
 @RequestMapping("/testManage")
 public class TestDataController {
@@ -102,6 +105,13 @@ public class TestDataController {
 		
 		return ccdTestPlanListNew;	
 	
+	}
+	
+	@RequestMapping(value="/getPlanListNew",method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public PageInfo<CcdTestPlan> getPlanListNew(@RequestBody Map<String, String> params) throws Exception {
+		PageInfo<CcdTestPlan> ccdTestPlanList = dataHandleService.GetPlanListNew(params);
+		return ccdTestPlanList;
 	}
 	
 	@RequestMapping(value="/getTestConfigList",method=RequestMethod.GET)

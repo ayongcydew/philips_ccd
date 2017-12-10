@@ -12,6 +12,7 @@ import com.cn.philips.pojo.CcdTestData;
 import com.cn.philips.pojo.CcdTestPlan;
 import com.cn.philips.pojo.CcdTestPlanNew;
 import com.cn.philips.pojo.CcdTestResault;
+import com.github.pagehelper.PageInfo;
 
 public interface DataHandleService {
 	
@@ -32,6 +33,8 @@ public interface DataHandleService {
 	public ArrayList<String> GetPlanNameList();
 	
 	public ArrayList<CcdTestPlanNew> GetPlanList(Integer start, Integer limit);
+	
+	public PageInfo<CcdTestPlan> GetPlanListNew(Map<String, String> params);
 	
 	public CcdTestConfig GetCcdTestConfig(String planName);
 	

@@ -65,9 +65,9 @@ public class ImportTestDataController {
 			ccdTestPlan.setOperatorName(multiRequest.getParameter("operatorname"));
 
 			// 获取multiRequest 中所有的文件名
-			Iterator iter = multiRequest.getFileNames();
+			Iterator<String> iter = multiRequest.getFileNames();
 
-			List<String> fileList = new ArrayList();
+			List<String> fileList = new ArrayList<>();
 
 			String directoryPath = "C:/CCDUploadFiles/" + ccdTestPlan.getPlanName() + "_" + new Date().getTime();
 
@@ -92,7 +92,7 @@ public class ImportTestDataController {
 				}
 			}
 			importTestDataService.InsertTestData(ccdTestPlan.getPlanName(), ccdTestPlan.getDescription(),
-					ccdTestPlan.getStartTime(), ccdTestPlan.getOperatorName(), fileList);
+					ccdTestPlan.getStartTime(), ccdTestPlan.getOperatorName(), "color", fileList);
 		}
 		long endTime = System.currentTimeMillis();
 		System.out.println("runtime: " + String.valueOf(endTime - startUpTime) + "ms");
@@ -106,10 +106,11 @@ public class ImportTestDataController {
 			@RequestBody String requestBody) throws Exception {
 		String filePath = request.getParameter("filepath");
 		String planName = request.getParameter("planname");
+		String type = request.getParameter("type");
 		Integer testNums = Integer.parseInt(request.getParameter("testnums"));
 
 		File file = new File(filePath);
-		ArrayList<List<String>> insertFileList = new ArrayList<>();
+		ArrayList<List<String>> insertFileList = new ArrayList<List<String>>();
 		if (!file.isDirectory()) {
 			throw new Exception("文件路径不存在");
 		} else if (file.isDirectory()) {
@@ -121,7 +122,7 @@ public class ImportTestDataController {
 			String[] filelist = file.list();
 
 			for (int num = 1; num <= testNums; num++) {
-				ArrayList<String> insertFileListtmp = new ArrayList<>();
+				ArrayList<String> insertFileListtmp = new ArrayList<String>();
 
 				for (int i = 0; i < filelist.length; i++) {
 					File readfile = new File(filePath + "\\" + filelist[i]);
@@ -173,7 +174,7 @@ public class ImportTestDataController {
 
 			for (List<String> tmpList : insertFileList) {
 				importTestDataService.InsertTestData(ccdTestPlan.getPlanName(), ccdTestPlan.getDescription(),
-						ccdTestPlan.getStartTime(), ccdTestPlan.getOperatorName(), tmpList);
+						ccdTestPlan.getStartTime(), ccdTestPlan.getOperatorName(), type, tmpList);
 			}
 
 		}
